@@ -1,4 +1,4 @@
-# dashboard_covid
+# dashboard
 
 - DXDATA의 대시보드 솔루션
 
