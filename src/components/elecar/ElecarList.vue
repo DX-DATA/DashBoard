@@ -4,23 +4,18 @@
       <h5>고소차 목록</h5>
     </div>
 
-    <Table :datas="state.datas" :key="state.datas" />
+    <Table />
   </div>
 </template>
 
 <script>
-import { reactive } from '@vue/reactivity';
+// import { reactive } from '@vue/reactivity';
 import Table from './Table.vue';
 
 export default {
   components: { Table },
   setup() {
-    let state = reactive({
-      datas: [],
-      originData: [],
-    });
-
-    return { state };
+    return {};
   },
   computed: {},
 };

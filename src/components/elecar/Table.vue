@@ -52,6 +52,7 @@
 
     <div class="custom-modal" v-on:click="closeModal"></div>
     <div class="modal-content">
+      <ElecarDetail />
       <KakaoMap
         :options="state.mapOption"
         :positions="state.positions"
@@ -68,17 +69,15 @@ import api from '../../api/api';
 import io from 'socket.io/client-dist/socket.io';
 import { onMounted, onUnmounted } from '@vue/runtime-core';
 import KakaoMap from '../modules/KakaoMap.vue';
-
+import ElecarDetail from './ElecarDetail.vue';
 export default {
-  props: ['datas'],
-  components: { KakaoMap },
+  components: { KakaoMap, ElecarDetail },
 
-  setup(props) {
+  setup() {
     //socket
     let socket = io('http://192.168.0.21:3333');
 
     let setData = (data) => {
-      console.log(data);
       for (let i = 0; i < state.datas.length; i++) {
         if (state.datas[i].eqp_id === data[0]) {
           state.datas[i].eqp_id = data[0];
@@ -89,20 +88,21 @@ export default {
         }
       }
     };
-    onMounted(() => {
-      axios
+
+    onMounted(async () => {
+      await axios
         .get('/api/elecar/current', {
           headers: {
             Authorization: 'Bearer ' + api.getCookie('auth'),
           },
         })
         .then((response) => {
+          console.log(response.data);
           response.data.forEach((element) => {
             if (element.current_gps_lon != 0) {
               state.datas.push(element);
             }
           });
-          console.log(state.datas);
           state.originData = state.datas;
         })
         .catch((error) => {
@@ -115,7 +115,7 @@ export default {
     });
 
     let state = reactive({
-      datas: props.datas,
+      datas: [],
       mapOption: {
         center: {
           lat: 33.450701,
