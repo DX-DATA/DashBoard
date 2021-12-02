@@ -46,8 +46,10 @@ export default {
         console.log(response);
         if (response.data === 1) {
           store.commit('setLogin', true);
+          state.logined = true;
         } else {
           store.commit('setLogin', false);
+          state.logined = false;
         }
       });
     }

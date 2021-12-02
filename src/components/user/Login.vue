@@ -50,7 +50,7 @@ export default {
             alert('로그인 정보를 다시 확인해 주세요');
           } else {
             store.commit('setToken', response.data);
-            console.log(store.state.token);
+            document.cookie = "auth=" + response.data;
           }
         })
         .catch((e) => {

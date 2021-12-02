@@ -41,7 +41,8 @@ export default {
   methods: {
     logout: function () {
       store.commit('setToken', '');
-      location.reload();
+      document.cookie = 'auth=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+      //location.reload();
     },
   },
 };
