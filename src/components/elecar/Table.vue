@@ -75,7 +75,7 @@ export default {
 
   setup(props) {
     //socket
-    let socket = io('http://127.0.0.1:3333');
+    let socket = io('http://192.168.0.21:3333');
 
     let setData = (data) => {
       console.log(data);
