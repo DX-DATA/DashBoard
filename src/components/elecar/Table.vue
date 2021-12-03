@@ -210,7 +210,7 @@ th {
   background-color: #fefefe;
   z-index: 101; /* Sit on top */
   margin-left: 5%;
-  padding: 0;
+  padding: 10px;
   border: 1px solid #888;
   width: 80%;
   top: 20vh;
