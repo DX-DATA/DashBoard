@@ -1,5 +1,5 @@
 {
-  "name": "dashboard_covid",
+  "name": "dashboard",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -21,7 +21,8 @@
     "vue-3-socket.io": "^1.0.4",
     "vue-chart-3": "^0.5.11",
     "vue-router": "^4.0.12",
-    "vue-socket.io": "^3.0.10"
+    "vue-socket.io": "^3.0.10",
+    "vuex": "^4.0.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",

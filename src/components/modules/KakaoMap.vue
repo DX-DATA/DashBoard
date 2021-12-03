@@ -33,7 +33,7 @@ export default {
         position.push({
           title: this.positions[i].use_timestamp,
           content:
-            "<div class='kakao_map_tooltip' style='box-sizing: content-box; font-size=12px'>" +
+            "<div class='kakao_map_tooltip' style='box-sizing: content-box; font-size:14px'>" +
             this.positions[i].use_timestamp +
             '</div>',
           latlng: new kakao.maps.LatLng(
@@ -126,7 +126,7 @@ export default {
 }
 .kakao_map_tooltip {
   padding: 0px;
-  font-size: 12px;
+  font-size: 13px;
   box-sizing: content-box !important;
 }
 

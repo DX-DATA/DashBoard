@@ -51,7 +51,7 @@ export default {
       const tempThirdData = [];
 
       await axios
-        .get('http://192.168.0.21:3000/api/vaccine?sido=전국')
+        .get('http://api.dxdata.co.kr:3000/api/vaccine?sido=전국')
         .then((res) => {
           // 차수 별 총 접종 수를 최신 일자로 가져오기
           let newInfo = res.data[res.data.length - 1];
@@ -88,7 +88,7 @@ export default {
     async function getCovid() {
       const tempTodayData = [];
 
-      await axios.get('http://192.168.0.21:3000/api/infection').then((res) => {
+      await axios.get('http://api.dxdata.co.kr:3000/api/infection').then((res) => {
         let afterfilter = [];
         // sido에서 검역과 합계인 데이터 삭제
         afterfilter = res.data.filter((v) => {
