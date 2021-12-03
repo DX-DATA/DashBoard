@@ -4,6 +4,7 @@ export default createStore({
   state: {
     token: null,
     login: false,
+    url: 'http://api.dxdata.co.kr:3333',
   },
   getters: {
     token(state) {
@@ -11,6 +12,9 @@ export default createStore({
     },
     login(state) {
       return state.login;
+    },
+    url(state) {
+      return state.url;
     },
   },
   mutations: {

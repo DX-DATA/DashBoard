@@ -52,7 +52,7 @@
 
     <div class="custom-modal" v-on:click="closeModal"></div>
     <div class="modal-content">
-      <ElecarDetail :data="state.detail" :key="state.detail"/>
+      <ElecarDetail :data="state.detail" :key="state.detail" />
       <KakaoMap
         :options="state.mapOption"
         :positions="state.positions"
@@ -70,10 +70,13 @@ import io from 'socket.io/client-dist/socket.io';
 import { onMounted, onUnmounted } from '@vue/runtime-core';
 import KakaoMap from '../modules/KakaoMap.vue';
 import ElecarDetail from './ElecarDetail.vue';
+import { useStore } from 'vuex';
 export default {
   components: { KakaoMap, ElecarDetail },
 
   setup() {
+    const store = useStore();
+    const url = store.getters.url;
     //socket
     let socket = io('http://api.dxdata.co.kr:3333');
 
@@ -91,7 +94,7 @@ export default {
 
     onMounted(async () => {
       await axios
-        .get('/api/elecar/current', {
+        .get(url + '/elecar/current', {
           headers: {
             Authorization: 'Bearer ' + api.getCookie('auth'),
           },
@@ -123,16 +126,18 @@ export default {
         },
         level: 6,
       },
-      detail : '',
+      detail: '',
       positions: [],
       click: (data) => {
         let param = data.eqp_id + '_' + data.last_timestamp.slice(0, 10);
-        document.getElementsByClassName('custom-modal')[0].style.display = 'block';
-        document.getElementsByClassName('modal-content')[0].style.display = 'grid';
+        document.getElementsByClassName('custom-modal')[0].style.display =
+          'block';
+        document.getElementsByClassName('modal-content')[0].style.display =
+          'grid';
         state.detail = data;
 
         axios
-          .get('/api/elecar/locations?key=' + param)
+          .get(url + '/elecar/locations?key=' + param)
           .then((response) => {
             state.positions = response.data;
             state.mapOption.center.lat = data.current_gps_lat;
@@ -150,7 +155,8 @@ export default {
 
     let closeModal = () => {
       document.getElementsByClassName('custom-modal')[0].style.display = 'none';
-      document.getElementsByClassName('modal-content')[0].style.display ='none';
+      document.getElementsByClassName('modal-content')[0].style.display =
+        'none';
     };
 
     return { state, closeModal };
@@ -252,25 +258,23 @@ th {
   }
 }
 
-
 @media (max-width: 768px) {
-.modal-content {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  background-color: #fefefe;
-  z-index: 101; /* Sit on top */
-  margin-left: 1%;
-  padding: 0;
-  border: 1px solid #888;
-  width: 98%;
-  top: 10%;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  animation: fadein 0.4s;
-  -moz-animation: fadein 0.4s; /* Firefox */
-  -webkit-animation: fadein 0.4s; /* Safari and Chrome */
-  -o-animation: fadein 0.4s; /* Opera */
-}
-
+  .modal-content {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    background-color: #fefefe;
+    z-index: 101; /* Sit on top */
+    margin-left: 1%;
+    padding: 0;
+    border: 1px solid #888;
+    width: 98%;
+    top: 10%;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    animation: fadein 0.4s;
+    -moz-animation: fadein 0.4s; /* Firefox */
+    -webkit-animation: fadein 0.4s; /* Safari and Chrome */
+    -o-animation: fadein 0.4s; /* Opera */
+  }
 }
 </style>

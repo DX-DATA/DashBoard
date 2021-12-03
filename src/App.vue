@@ -27,7 +27,7 @@ export default {
   },
   setup() {
     const store = useStore();
-
+    const url = store.getters.url;
     onMounted(() => {
       check();
     });
@@ -37,13 +37,11 @@ export default {
     });
 
     function check() {
-      console.log(api.getCookie('auth'));
       axios({
         method: 'post',
-        url: '/api/auth/check',
+        url: url + '/auth/check',
         headers: { Authorization: 'Bearer ' + api.getCookie('auth') },
       }).then((response) => {
-        console.log(response);
         if (response.data === 1) {
           store.commit('setLogin', true);
           state.logined = true;

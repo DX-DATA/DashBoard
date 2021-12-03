@@ -33,6 +33,7 @@ import axios from 'axios';
 export default {
   setup() {
     const store = useStore();
+    const url = store.getters.url;
 
     let states = reactive({
       id: '',
@@ -41,7 +42,7 @@ export default {
 
     let login = async () => {
       axios
-        .post('/api/auth/login', {
+        .post(url + '/auth/login', {
           id: states.id,
           password: states.password,
         })
@@ -50,7 +51,7 @@ export default {
             alert('로그인 정보를 다시 확인해 주세요');
           } else {
             store.commit('setToken', response.data);
-            document.cookie = "auth=" + response.data;
+            document.cookie = 'auth=' + response.data;
           }
         })
         .catch((e) => {
