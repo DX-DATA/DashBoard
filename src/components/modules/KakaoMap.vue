@@ -116,7 +116,7 @@ export default {
 
 <style scoped>
 #map {
-  margin: 1px 5px 1px 0px;
+  width: 500px;
   height: 500px;
 }
 *,
