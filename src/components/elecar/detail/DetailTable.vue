@@ -6,23 +6,28 @@
         <th>경도</th>
         <th>업데이트 시간</th>
       </thead>
-      <tr>
-        <td>dtd</td>
-        <td>dtd</td>
-        <td>dtd</td>
-      </tr>
-      <tr>
-        <td>dtd</td>
-        <td>dtd</td>
-        <td>dtd</td>
-      </tr>
+      <tbody>
+        <tr v-for="data in state.datas" :key="data">
+          <td>{{ data.gps_lat }}</td>
+          <td>{{ data.gps_lon }}</td>
+          <td>{{ data.use_timestamp }}</td>
+        </tr>
+      </tbody>
     </table>
   </div>
 </template>
 
 <script>
+import { reactive } from 'vue-demi';
 export default {
-  setup() {},
+  props: ['data'],
+  setup(props) {
+    let state = reactive({
+      datas: props.data,
+    });
+
+    return { state };
+  },
 };
 </script>
 

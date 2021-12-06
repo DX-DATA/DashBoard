@@ -5,7 +5,7 @@
     </div>
     <ul class="nav nav-pills flex-column mb-auto">
       <li>
-        <router-link to="/" class="nav_link text-white">
+        <router-link to="/home" class="nav_link text-white">
           <i class="fas fa-home"></i> Home
         </router-link>
       </li>

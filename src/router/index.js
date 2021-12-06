@@ -13,11 +13,12 @@ const routes = [
   {
     path: '/',
     name: 'DashBoard',
+    redirect: 'home',
     component: DashBoard,
     meta: { auth: true },
     children: [
       {
-        path: '',
+        path: 'home',
         name: 'Main',
         component: Main,
       },

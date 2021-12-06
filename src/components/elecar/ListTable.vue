@@ -21,7 +21,7 @@
         <th>예약</th>
       </thead>
       <tbody :key="state.datas">
-        <tr v-for="data in state.datas" v-bind:key="data.eqp_id">
+        <tr v-for="data in state.datas" v-bind:key="data">
           <td v-on:click="state.click(data)">
             {{ data.eqp_id }}
           </td>
@@ -42,8 +42,11 @@
               대여하기
             </button>
           </td>
-          <td style="width: 120px" v-else-if="checkDepartment(data)">
-            <button class="btn btn-warning" v-on:click="returnElecar(data)">
+          <td style="width: 120px" v-else-if="state.checkDepartment(data)">
+            <button
+              class="btn btn-warning"
+              v-on:click="state.returnElecar(data)"
+            >
               반납하기
             </button>
           </td>
@@ -59,24 +62,28 @@
 
     <div class="custom-modal" v-on:click="closeModal"></div>
     <div class="modal-content">
-      <ElecarDetail :data="state.detail" :key="state.detail" />
+      <ElecarDetail
+        :data="state.detail"
+        :checkDepartment="checkDepartment"
+        :key="state.detail"
+      />
     </div>
   </div>
 </template>
 
 <script>
 import ElecarDetail from './detail/ElecarDetail.vue';
-import axios from 'axios';
-import { useStore } from 'vuex';
-import api from '../../api/api';
+// import axios from 'axios';
+// import { useStore } from 'vuex';
+// import api from '../../api/api';
 export default {
   components: { ElecarDetail },
   props: {
     state: Object,
   },
   setup() {
-    let store = useStore();
-    let url = store.getters.url;
+    // let store = useStore();
+    // let url = store.getters.url;
 
     let closeModal = () => {
       document.getElementsByClassName('custom-modal')[0].style.display = 'none';
@@ -84,34 +91,7 @@ export default {
         'none';
     };
 
-    let checkDepartment = (data) => {
-      if (localStorage.getItem('department') === data.department) {
-        return true;
-      } else {
-        return false;
-      }
-    };
-
-    let returnElecar = (data) => {
-      if (confirm('반납하시겠습니까?')) {
-        axios({
-          method: 'post',
-          url: url + '/elecar/return',
-          headers: { Authorization: 'Bearer ' + api.getCookie('auth') },
-          data: { eqp_id: data.eqp_id },
-        })
-          .then((response) => {
-            console.log(response);
-            alert('반납을 완료했습니다.');
-            window.location.reload();
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      }
-    };
-
-    return { closeModal, checkDepartment, returnElecar };
+    return { closeModal };
   },
 };
 </script>
@@ -205,6 +185,34 @@ th {
     opacity: 0;
   }
   to {
+    opacity: 1;
+  }
+}
+
+.blink-2 {
+  -webkit-animation: blink-2 0.8s ease-in both;
+  animation: blink-2 0.8s ease-in both;
+}
+
+@-webkit-keyframes blink-2 {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.2;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes blink-2 {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.2;
+  }
+  100% {
     opacity: 1;
   }
 }
