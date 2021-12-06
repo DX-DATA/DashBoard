@@ -61,37 +61,22 @@ export default {
       socket.on('new_elecar', function (data) {
         setData(data);
       });
+
+      socket.on('update_elecar', function (data) {
+        console.log('update');
+        console.log(data);
+      });
     });
 
     let state = reactive({
       datas: [],
-      mapOption: {
-        center: {
-          lat: 33.450701,
-          lng: 126.570667,
-        },
-        level: 6,
-      },
       detail: '',
-      positions: [],
       click: (data) => {
-        let param = data.eqp_id + '_' + data.last_timestamp.slice(0, 10);
+        state.detail = data;
         document.getElementsByClassName('custom-modal')[0].style.display =
           'block';
         document.getElementsByClassName('modal-content')[0].style.display =
           'grid';
-        state.detail = data;
-
-        axios
-          .get(url + '/elecar/locations?key=' + param)
-          .then((response) => {
-            state.positions = response.data;
-            state.mapOption.center.lat = data.current_gps_lat;
-            state.mapOption.center.lng = data.current_gps_lon;
-          })
-          .catch((err) => {
-            console.log(err);
-          });
       },
     });
 

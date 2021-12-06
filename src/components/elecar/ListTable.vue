@@ -62,12 +62,11 @@
 // import axios from 'axios';
 // import api from '../../api/api';
 // import io from 'socket.io/client-dist/socket.io';
-// import { onMounted, onUnmounted } from '@vue/runtime-core';
-import KakaoMap from '../modules/KakaoMap.vue';
-import ElecarDetail from './ElecarDetail.vue';
+// import { onMounted } from '@vue/runtime-core';
+import ElecarDetail from './detail/ElecarDetail.vue';
 // import { useStore } from 'vuex';
 export default {
-  components: { KakaoMap, ElecarDetail },
+  components: { ElecarDetail },
   props: {
     state: Object,
   },
@@ -78,47 +77,6 @@ export default {
         'none';
     };
 
-    onMounted(async () => {
-      await axios
-        .get(url + '/elecar/current', {
-          headers: {
-            Authorization: 'Bearer ' + api.getCookie('auth'),
-          },
-        })
-        .then((response) => {
-          response.data.forEach((element) => {
-            if (element.current_gps_lon != 0) {
-              state.datas.push(element);
-            }
-          });
-          state.originData = state.datas;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-
-      socket.on('new_elecar', function (data) {
-        setData(data);
-      });
-
-      socket.on('update_elecar', function (data) {
-        console.log('update');
-        console.log(data);
-      });
-    });
-
-    let state = reactive({
-      datas: [],
-
-      detail: '',
-      click: (data) => {
-        state.detail = data;
-        document.getElementsByClassName('custom-modal')[0].style.display =
-          'block';
-        document.getElementsByClassName('modal-content')[0].style.display =
-          'grid';
-      },
-    });
     return { closeModal };
   },
 
