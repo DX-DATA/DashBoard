@@ -1,6 +1,6 @@
 <template>
   <div class="container-fluid">
-    <UsingTable :state="routeData" />
+    <UsingTable :routeData="routeData" />
     <article class="card grid-item">
       <h4>실시간 고소차 위치</h4>
       <table class="table table-hover">
