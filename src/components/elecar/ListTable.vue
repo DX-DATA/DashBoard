@@ -38,7 +38,14 @@
             {{ data.last_timestamp }}
           </td>
           <td v-if="data.useYN === 0">
-            <button class="btn btn-primary">대여하기</button>
+            <button class="btn btn-primary" v-on:click="state.click(data)">
+              대여하기
+            </button>
+          </td>
+          <td style="width: 120px" v-else-if="checkDepartment(data)">
+            <button class="btn btn-warning" v-on:click="returnElecar(data)">
+              반납하기
+            </button>
           </td>
           <td style="width: 120px" v-else>
             <button class="btn btn-secondary" disabled>사용중</button>
@@ -96,6 +103,7 @@ export default {
           },
         })
         .then((response) => {
+          console.log(response.data);
           response.data.forEach((element) => {
             if (element.current_gps_lon != 0) {
               state.datas.push(element);
@@ -109,11 +117,6 @@ export default {
 
       socket.on('new_elecar', function (data) {
         setData(data);
-      });
-
-      socket.on('update_elecar', function (data) {
-        console.log('update');
-        console.log(data);
       });
     });
 
@@ -140,7 +143,34 @@ export default {
         'none';
     };
 
-    return { state, closeModal };
+    let checkDepartment = (data) => {
+      if (localStorage.getItem('department') === data.department) {
+        return true;
+      } else {
+        return false;
+      }
+    };
+
+    let returnElecar = (data) => {
+      if (confirm('반납하시겠습니까?')) {
+        axios({
+          method: 'post',
+          url: url + '/elecar/return',
+          headers: { Authorization: 'Bearer ' + api.getCookie('auth') },
+          data: { eqp_id: data.eqp_id },
+        })
+          .then((response) => {
+            console.log(response);
+            alert('반납을 완료했습니다.');
+            window.location.reload();
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+    };
+
+    return { state, closeModal, checkDepartment, returnElecar };
   },
   watch: {},
 };

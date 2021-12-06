@@ -1,7 +1,7 @@
 <template>
   <div class="detail-container">
     <div class="container-fluid">
-      <h4>고소차 상세 조회</h4>
+      <h4>고소차 대여 및 상세 조회</h4>
       <div class="form-group">
         <div class="form-floating">
           <input
@@ -63,7 +63,7 @@
             type="text"
             class="form-control"
             id="start"
-            v-model="state.data.department"
+            v-model="state.data.start_time"
             readonly
           />
           <label for="start">사용시작시간</label>
@@ -100,7 +100,7 @@
             <option>23</option>
             <option>24</option>
           </select>
-          <select class="form-select divide">
+          <select class="form-select divide" v-model="rent.start_time.time">
             <option selected>0</option>
             <option selected>30</option>
           </select>
@@ -111,9 +111,10 @@
             type="text"
             class="form-control"
             id="return"
-            v-model="state.data.department"
+            v-model="state.data.end_time"
             readonly
           />
+          <label for="start">사용종료시간</label>
         </div>
         <div v-else>
           <input
@@ -147,7 +148,7 @@
             <option>23</option>
             <option>24</option>
           </select>
-          <select class="form-select divide">
+          <select class="form-select divide" v-model="rent.end_time.time">
             <option selected>0</option>
             <option selected>30</option>
           </select>
@@ -273,20 +274,35 @@ export default {
             ':00',
         };
 
-        axios({
-          method: 'post',
-          url: url + '/elecar/rent',
-          headers: { Authorization: 'Bearer ' + api.getCookie('auth') },
-          data: params,
-        })
-          .then((response) => {
-            console.log(response);
+        if (
+          confirm(
+            '고소차 ID : ' +
+              params.eqp_id +
+              '\n대여 시작 시각 : ' +
+              params.start_time +
+              '\n대여 종료 시각 : ' +
+              params.end_time +
+              '\n대여 하시겠습니까?'
+          )
+        ) {
+          axios({
+            method: 'post',
+            url: url + '/elecar/rent',
+            headers: { Authorization: 'Bearer ' + api.getCookie('auth') },
+            data: params,
           })
-          .catch((err) => {
-            console.log(err);
-          });
-
-        console.log(params);
+            .then((response) => {
+              if (response.data.affectedRows !== 1) {
+                ('에러가 발생했습니다 다시 시도해 주세요');
+              } else {
+                alert('대여를 완료했습니다.');
+                window.location.reload();
+              }
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        }
       },
     });
     //요청 파람 reactive
