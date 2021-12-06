@@ -4,17 +4,88 @@
       <ElecarHeader />
     </div>
     <div class="content">
-      <router-view></router-view>
+      <router-view :routeData="state"></router-view>
     </div>
   </div>
 </template>
 
 <script>
 import ElecarHeader from './ElecarHeader.vue';
-
+import { reactive } from '@vue/reactivity';
+import axios from 'axios';
+import api from '../../api/api';
+import io from 'socket.io/client-dist/socket.io';
+import { onMounted, onUnmounted } from '@vue/runtime-core';
+import { useStore } from 'vuex';
 export default {
   components: { ElecarHeader },
-  setup() {},
+
+  setup() {
+    const store = useStore();
+    const url = store.getters.url;
+    //socket
+    let socket = io('http://api.dxdata.co.kr:3333');
+
+    let setData = (data) => {
+      for (let i = 0; i < state.datas.length; i++) {
+        if (state.datas[i].eqp_id === data[0]) {
+          state.datas[i].eqp_id = data[0];
+          state.datas[i].current_gps_lat = data[1];
+          state.datas[i].current_gps_lon = data[2];
+          state.datas[i].department = data[4];
+          state.datas[i].last_timestamp = data[7];
+        }
+      }
+    };
+
+    onMounted(async () => {
+      await axios
+        .get(url + '/elecar/current', {
+          headers: {
+            Authorization: 'Bearer ' + api.getCookie('auth'),
+          },
+        })
+        .then((response) => {
+          // console.log(response.data);
+          response.data.forEach((element) => {
+            if (element.current_gps_lon != 0) {
+              state.datas.push(element);
+            }
+          });
+          state.originData = state.datas;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
+      socket.on('new_elecar', function (data) {
+        setData(data);
+      });
+
+      socket.on('update_elecar', function (data) {
+        console.log('update');
+        console.log(data);
+      });
+    });
+
+    let state = reactive({
+      datas: [],
+      detail: '',
+      click: (data) => {
+        state.detail = data;
+        document.getElementsByClassName('custom-modal')[0].style.display =
+          'block';
+        document.getElementsByClassName('modal-content')[0].style.display =
+          'grid';
+      },
+    });
+
+    onUnmounted(() => {
+      socket.disconnect();
+    });
+
+    return { state };
+  },
 };
 </script>
 

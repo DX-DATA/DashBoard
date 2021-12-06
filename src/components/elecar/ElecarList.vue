@@ -3,8 +3,7 @@
     <div>
       <h5>고소차 목록</h5>
     </div>
-
-    <Table />
+    <Table :state="routeData" />
   </div>
 </template>
 
@@ -14,6 +13,9 @@ import Table from './ListTable.vue';
 
 export default {
   components: { Table },
+  props: {
+    routeData: Object,
+  },
   setup() {
     return {};
   },
