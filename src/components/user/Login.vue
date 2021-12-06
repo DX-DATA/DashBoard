@@ -50,8 +50,11 @@ export default {
           if (response.data === -1 || response.data === 0) {
             alert('로그인 정보를 다시 확인해 주세요');
           } else {
+            let setcookie = async (response) => {
+              document.cookie = 'auth=' + response.data.token;
+            };
+            await setcookie(response);
             store.commit('setToken', response.data.token);
-            document.cookie = 'auth=' + response.data.token;
             localStorage.setItem('department', response.data.department);
           }
         })
