@@ -160,22 +160,30 @@
         >
           대여하기
         </button>
-        <button class="btn btn-primary" v-else disabled>대여하기</button>
+        <button class="btn btn-warning" v-else-if="checkDepartment()">
+          반납하기
+        </button>
+        <button class="btn btn-secondary" v-else disabled>사용중</button>
+
         <button class="btn btn-success">예약하기</button>
 
         <label class="label-input">경로 상세 조회</label>
 
         <div class="form-floating">
-          <input type="date" class="form-control" v-model="param.search.date" />
+          <input type="date" class="form-control" v-model="search.date" />
           <label for="location">일자</label>
         </div>
-        <button class="btn btn-primary" v-on:click="state.query">
+        <button class="btn btn-primary" v-on:click="search.query(data)">
           상세조회
         </button>
       </div>
-      <DetailTable />
+      <DetailTable :data="search.data" :key="search.data" />
     </div>
-    <KakaoMap :options="state.mapOption" :key="state.mapOption.center.lat" />
+    <KakaoMap
+      :options="state.mapOption"
+      :key="state.mapOption.center.lat"
+      :positions="search.positions"
+    />
   </div>
 </template>
 
@@ -207,25 +215,6 @@ export default {
         },
         level: 6,
       },
-      positions: undefined,
-
-      click: (data) => {
-        //let param = data.eqp_id + '_' + data.last_timestamp.slice(0, 10);
-        state.mapOption.center.lat = data.current_gps_lat;
-        state.mapOption.center.lng = data.current_gps_lon;
-        // axios
-        //   .get(url + '/elecar/locations?key=' + param)
-        //   .then((response) => {
-        //     state.positions = response.data;
-        //     state.mapOption.center.lat = data.current_gps_lat;
-        //     state.mapOption.center.lng = data.current_gps_lon;
-        //   })
-        //   .catch((err) => {
-        //     console.log(err);
-        //   });
-      },
-
-      query: () => {},
     });
 
     let rent = reactive({
@@ -296,7 +285,7 @@ export default {
                 ('에러가 발생했습니다 다시 시도해 주세요');
               } else {
                 alert('대여를 완료했습니다.');
-                window.location.reload();
+                // window.location.reload();
               }
             })
             .catch((err) => {
@@ -305,10 +294,25 @@ export default {
         }
       },
     });
-    //요청 파람 reactive
-    let param = reactive({
-      search: {
-        date: getToday(),
+    //상세 조회 param
+    let search = reactive({
+      date: getToday(),
+      data: [], //테이블 데이터들임니다람쥐!!
+      positions: undefined,
+
+      query: (data) => {
+        let param = data.eqp_id + '_' + search.date;
+        axios
+          .get(url + '/elecar/locations?key=' + param)
+          .then((response) => {
+            search.positions = response.data;
+            search.data = response.data;
+            state.mapOption.center.lat = response.data[2].gps_lat;
+            state.mapOption.center.lng = response.data[2].gps_lon;
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       },
     });
 
@@ -325,7 +329,15 @@ export default {
       return today.getFullYear() + '-' + month + '-' + day;
     }
 
-    return { state, rent, param };
+    let checkDepartment = () => {
+      if (localStorage.getItem('department') === state.data.department) {
+        return true;
+      } else {
+        return false;
+      }
+    };
+
+    return { state, rent, search, checkDepartment };
   },
 };
 </script>

@@ -38,6 +38,21 @@ export default {
       }
     };
 
+    let updataData = (data) => {
+      for (let i = 0; i < state.datas.length; i++) {
+        if (state.datas[i].eqp_id === data.eqp_id) {
+          state.datas[i].eqp_id = data.eqp_id;
+          state.datas[i].current_gps_lat = data.current_gps_lat;
+          state.datas[i].current_gps_lon = data.current_gps_lon;
+          state.datas[i].department = data.department;
+          state.datas[i].last_timestamp = data.last_timestamp;
+          state.datas[i].start_time = data.start_time;
+          state.datas[i].end_time = data.end_time;
+          state.datas[i].useYN = data.useYN;
+        }
+      }
+    };
+
     onMounted(async () => {
       await axios
         .get(url + '/elecar/current', {
@@ -64,7 +79,7 @@ export default {
 
       socket.on('update_elecar', function (data) {
         console.log('update');
-        console.log(data);
+        updataData(data[0]);
       });
     });
 
@@ -77,6 +92,30 @@ export default {
           'block';
         document.getElementsByClassName('modal-content')[0].style.display =
           'grid';
+      },
+      checkDepartment: (data) => {
+        if (localStorage.getItem('department') === data.department) {
+          return true;
+        } else {
+          return false;
+        }
+      },
+      returnElecar: (data) => {
+        if (confirm('반납하시겠습니까?')) {
+          axios({
+            method: 'post',
+            url: url + '/elecar/return',
+            headers: { Authorization: 'Bearer ' + api.getCookie('auth') },
+            data: { eqp_id: data.eqp_id },
+          })
+            .then((response) => {
+              console.log(response);
+              alert('반납을 완료했습니다.');
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        }
       },
     });
 
