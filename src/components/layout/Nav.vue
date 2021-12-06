@@ -66,11 +66,24 @@
 </template>
 
 <script>
+import { useStore } from 'vuex';
+
 export default {
+  data() {
+    return {
+      store: useStore(),
+    };
+  },
   methods: {
-    logout: function () {
-      document.cookie = 'auth=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-      location.reload();
+    logout: async function () {
+      let setcookie = async () => {
+        document.cookie =
+          'auth=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+      };
+
+      await setcookie();
+
+      this.store.commit('setToken', '');
     },
   },
   watch: {

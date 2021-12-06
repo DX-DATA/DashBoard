@@ -51,11 +51,10 @@ export default {
             alert('로그인 정보를 다시 확인해 주세요');
           } else {
             let setcookie = async (response) => {
-              document.cookie = 'auth=' + response.data.token;
+              document.cookie = 'auth=' + response.data.token + '; path=/;';
             };
             await setcookie(response);
-            store.commit('setToken', response.data.token);
-            localStorage.setItem('department', response.data.department);
+            location.href = '/';
           }
         })
         .catch((e) => {
