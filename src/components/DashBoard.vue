@@ -26,25 +26,17 @@
 </template>
 
 <script>
-import { useStore } from 'vuex';
 //import HelloWorld from './components/HelloWorld.vue'
 //import Header from './layout/Header.vue'
 import Nav from './layout/Nav.vue';
 
-const store = useStore();
 export default {
   name: 'DashBoard',
   components: {
     Nav,
     //Header
   },
-  methods: {
-    logout: function () {
-      store.commit('setToken', '');
-      document.cookie = 'auth=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-      //location.reload();
-    },
-  },
+  methods: {},
 };
 </script>
 
