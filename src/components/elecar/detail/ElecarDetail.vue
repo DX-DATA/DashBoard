@@ -1,0 +1,368 @@
+<template>
+  <div class="detail-container">
+    <div class="container-fluid">
+      <h4>고소차 상세 조회</h4>
+      <div class="form-group">
+        <div class="form-floating">
+          <input
+            type="text"
+            class="form-control"
+            id="eqp_id"
+            v-model="state.data.eqp_id"
+            readonly
+          />
+          <label for="eqp_id">ID</label>
+        </div>
+
+        <div class="form-floating">
+          <input
+            type="text"
+            class="form-control"
+            id="update"
+            v-model="state.data.last_timestamp"
+            readonly
+          />
+          <label for="update">최종 업데이트 시간</label>
+        </div>
+
+        <div class="form-floating">
+          <input
+            type="text"
+            class="form-control"
+            id="use"
+            v-model="state.useYN"
+            readonly
+          />
+          <label for="use">사용여부</label>
+        </div>
+
+        <div class="form-floating">
+          <input
+            type="text"
+            class="form-control"
+            id="department"
+            v-model="state.data.department"
+            readonly
+          />
+          <label for="department">사용부서</label>
+        </div>
+
+        <div class="form-floating location">
+          <input
+            type="text"
+            class="form-control"
+            id="location"
+            v-model="state.location"
+            readonly
+          />
+          <label for="location">현재위치</label>
+        </div>
+
+        <div class="form-floating" v-if="state.bool">
+          <input
+            type="text"
+            class="form-control"
+            id="start"
+            v-model="state.data.department"
+            readonly
+          />
+          <label for="start">사용시작시간</label>
+        </div>
+        <div v-else>
+          <input
+            type="date"
+            class="form-control div_date"
+            v-model="rent.start_time.date"
+          />
+          <select class="form-select divide" v-model="rent.start_time.hour">
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+            <option>6</option>
+            <option>7</option>
+            <option>8</option>
+            <option>9</option>
+            <option>10</option>
+            <option>11</option>
+            <option>12</option>
+            <option>13</option>
+            <option>14</option>
+            <option>15</option>
+            <option>16</option>
+            <option>17</option>
+            <option>18</option>
+            <option>19</option>
+            <option>20</option>
+            <option>21</option>
+            <option>22</option>
+            <option>23</option>
+            <option>24</option>
+          </select>
+          <select class="form-select divide">
+            <option selected>0</option>
+            <option selected>30</option>
+          </select>
+        </div>
+
+        <div class="form-floating" v-if="state.bool">
+          <input
+            type="text"
+            class="form-control"
+            id="return"
+            v-model="state.data.department"
+            readonly
+          />
+        </div>
+        <div v-else>
+          <input
+            type="date"
+            class="form-control div_date"
+            v-model="rent.end_time.date"
+          />
+          <select class="form-select divide" v-model="rent.end_time.hour">
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+            <option>6</option>
+            <option>7</option>
+            <option>8</option>
+            <option>9</option>
+            <option>10</option>
+            <option>11</option>
+            <option>12</option>
+            <option>13</option>
+            <option>14</option>
+            <option>15</option>
+            <option>16</option>
+            <option>17</option>
+            <option>18</option>
+            <option>19</option>
+            <option>20</option>
+            <option>21</option>
+            <option>22</option>
+            <option>23</option>
+            <option>24</option>
+          </select>
+          <select class="form-select divide">
+            <option selected>0</option>
+            <option selected>30</option>
+          </select>
+        </div>
+        <button
+          class="btn btn-primary"
+          v-if="!state.bool"
+          v-on:click="rent.postRent"
+        >
+          대여하기
+        </button>
+        <button class="btn btn-primary" v-else disabled>대여하기</button>
+        <button class="btn btn-success">예약하기</button>
+
+        <label class="label-input">경로 상세 조회</label>
+
+        <div class="form-floating">
+          <input type="date" class="form-control" v-model="param.search.date" />
+          <label for="location">일자</label>
+        </div>
+        <button class="btn btn-primary" v-on:click="state.query">
+          상세조회
+        </button>
+      </div>
+      <DetailTable />
+    </div>
+    <KakaoMap :options="state.mapOption" :key="state.mapOption.center.lat" />
+  </div>
+</template>
+
+<script>
+import { reactive } from '@vue/reactivity';
+import DetailTable from './DetailTable';
+import KakaoMap from '../../modules/KakaoMap.vue';
+import axios from 'axios';
+import { useStore } from 'vuex';
+import api from '../../../api/api';
+export default {
+  components: { DetailTable, KakaoMap },
+  props: ['data'],
+  setup(props) {
+    let store = useStore();
+    let url = store.getters.url;
+
+    //정보들 state
+    let state = reactive({
+      data: props.data,
+      useYN: props.data.useYN === 1 ? '사용' : '미사용',
+      bool: props.data.useYN === 1 ? true : false,
+      location: props.data.current_gps_lat + ' / ' + props.data.current_gps_lon,
+
+      mapOption: {
+        center: {
+          lat: props.data.current_gps_lat,
+          lng: props.data.current_gps_lon,
+        },
+        level: 6,
+      },
+      positions: undefined,
+
+      click: (data) => {
+        //let param = data.eqp_id + '_' + data.last_timestamp.slice(0, 10);
+        state.mapOption.center.lat = data.current_gps_lat;
+        state.mapOption.center.lng = data.current_gps_lon;
+        // axios
+        //   .get(url + '/elecar/locations?key=' + param)
+        //   .then((response) => {
+        //     state.positions = response.data;
+        //     state.mapOption.center.lat = data.current_gps_lat;
+        //     state.mapOption.center.lng = data.current_gps_lon;
+        //   })
+        //   .catch((err) => {
+        //     console.log(err);
+        //   });
+      },
+
+      query: () => {},
+    });
+
+    let rent = reactive({
+      start_time: {
+        date: getToday(),
+        hour: new Date().getHours(),
+        time: 0,
+      },
+      end_time: {
+        date: getToday(),
+        hour: new Date().getHours() + 1,
+        time: 0,
+      },
+      postRent: () => {
+        if (rent.start_time.hour < 10) {
+          rent.start_time.hour = '0' + rent.start_time.hour;
+        }
+
+        if (rent.start_time.time < 10) {
+          rent.start_time.time = '0' + rent.start_time.time;
+        }
+
+        if (rent.end_time.hour < 10) {
+          rent.end_time.hour = '0' + rent.end_time.hour;
+        }
+
+        if (rent.end_time.time < 10) {
+          rent.end_time.time = '0' + rent.end_time.time;
+        }
+
+        let params = {
+          eqp_id: state.data.eqp_id,
+          start_time:
+            rent.start_time.date +
+            ' ' +
+            rent.start_time.hour +
+            ':' +
+            rent.start_time.time +
+            ':00',
+          end_time:
+            rent.end_time.date +
+            ' ' +
+            rent.end_time.hour +
+            ':' +
+            rent.end_time.time +
+            ':00',
+        };
+
+        axios({
+          method: 'post',
+          url: url + '/elecar/rent',
+          headers: { Authorization: 'Bearer ' + api.getCookie('auth') },
+          data: params,
+        })
+          .then((response) => {
+            console.log(response);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+
+        console.log(params);
+      },
+    });
+    //요청 파람 reactive
+    let param = reactive({
+      search: {
+        date: getToday(),
+      },
+    });
+
+    function getToday() {
+      let today = new Date();
+      let month = today.getMonth() + 1;
+      if (month < 10) {
+        month = '0' + month;
+      }
+      let day = today.getDate();
+      if (day < 10) {
+        day = '0' + day;
+      }
+      return today.getFullYear() + '-' + month + '-' + day;
+    }
+
+    return { state, rent, param };
+  },
+};
+</script>
+
+<style scoped>
+.detail-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 10px;
+}
+
+.container-fluid {
+  height: 500px;
+  overflow-y: auto;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.container-fluid::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera*/
+}
+
+.form-control {
+  background-color: white !important;
+}
+
+.location {
+  grid-column: 1 / 3;
+}
+
+.form-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5px;
+  width: 100%;
+}
+
+.label-input {
+  grid-column: 1 / 3;
+}
+
+.btn {
+  height: 58px;
+}
+
+.div_date {
+  width: 50%;
+  display: inline;
+}
+
+.divide {
+  width: 23%;
+  margin-left: 2%;
+  display: inline;
+}
+</style>

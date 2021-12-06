@@ -18,33 +18,33 @@
         <th>사용부서</th>
         <th>최종 업데이트 시간</th>
         <th>대여</th>
+        <th>예약</th>
       </thead>
       <tbody :key="state.datas">
-        <tr
-          v-for="data in state.datas"
-          v-bind:key="data.eqp_id"
-          v-on:click="state.click(data)"
-        >
-          <td>
+        <tr v-for="data in state.datas" v-bind:key="data.eqp_id">
+          <td v-on:click="state.click(data)">
             {{ data.eqp_id }}
           </td>
-          <td>
+          <td v-on:click="state.click(data)">
             {{ data.current_gps_lon }}
           </td>
-          <td>
+          <td v-on:click="state.click(data)">
             {{ data.current_gps_lat }}
           </td>
-          <td>
+          <td v-on:click="state.click(data)">
             {{ data.department }}
           </td>
-          <td>
+          <td v-on:click="state.click(data)">
             {{ data.last_timestamp }}
           </td>
           <td v-if="data.useYN === 0">
             <button class="btn btn-primary">대여하기</button>
           </td>
-          <td v-else>
-            <button class="btn btn-secondary">사용중</button>
+          <td style="width: 120px" v-else>
+            <button class="btn btn-secondary" disabled>사용중</button>
+          </td>
+          <td style="width: 120px">
+            <button class="btn btn-success">예약하기</button>
           </td>
         </tr>
       </tbody>
@@ -53,11 +53,6 @@
     <div class="custom-modal" v-on:click="closeModal"></div>
     <div class="modal-content">
       <ElecarDetail :data="state.detail" :key="state.detail" />
-      <KakaoMap
-        :options="state.mapOption"
-        :positions="state.positions"
-        :key="state.mapOption.center.lat"
-      />
     </div>
   </div>
 </template>
@@ -83,6 +78,47 @@ export default {
         'none';
     };
 
+    onMounted(async () => {
+      await axios
+        .get(url + '/elecar/current', {
+          headers: {
+            Authorization: 'Bearer ' + api.getCookie('auth'),
+          },
+        })
+        .then((response) => {
+          response.data.forEach((element) => {
+            if (element.current_gps_lon != 0) {
+              state.datas.push(element);
+            }
+          });
+          state.originData = state.datas;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
+      socket.on('new_elecar', function (data) {
+        setData(data);
+      });
+
+      socket.on('update_elecar', function (data) {
+        console.log('update');
+        console.log(data);
+      });
+    });
+
+    let state = reactive({
+      datas: [],
+
+      detail: '',
+      click: (data) => {
+        state.detail = data;
+        document.getElementsByClassName('custom-modal')[0].style.display =
+          'block';
+        document.getElementsByClassName('modal-content')[0].style.display =
+          'grid';
+      },
+    });
     return { closeModal };
   },
 
@@ -216,15 +252,14 @@ th {
 
 .modal-content {
   display: none; /* Hidden by default */
-  grid-template-columns: 1fr 1fr;
-  column-gap: 10px;
+  padding: 10px;
   position: fixed; /* Stay in place */
   background-color: #fefefe;
   z-index: 101; /* Sit on top */
   margin-left: 5%;
-  padding: 0;
   border: 1px solid #888;
   width: 80%;
+  height: 550px;
   top: 20vh;
   border-radius: 10px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -232,6 +267,7 @@ th {
   -moz-animation: fadein 0.4s; /* Firefox */
   -webkit-animation: fadein 0.4s; /* Safari and Chrome */
   -o-animation: fadein 0.4s; /* Opera */
+  overflow: auto;
 }
 
 @keyframes fadein {

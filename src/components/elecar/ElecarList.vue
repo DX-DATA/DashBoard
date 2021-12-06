@@ -9,7 +9,7 @@
 
 <script>
 // import { reactive } from '@vue/reactivity';
-import Table from './Table.vue';
+import Table from './ListTable.vue';
 
 export default {
   components: { Table },

@@ -6,7 +6,8 @@
 </template>
 
 <script>
-import { onMounted, reactive } from 'vue-demi';
+import { reactive } from '@vue/reactivity';
+import { onMounted } from '@vue/runtime-core';
 // import axios from 'axios';
 export default {
   setup() {
