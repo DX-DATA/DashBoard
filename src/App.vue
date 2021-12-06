@@ -1,18 +1,13 @@
 <template>
   <div id="app" class="wrapper">
-    <div v-if="state.logined">
-      <DashBoard></DashBoard>
-    </div>
-    <div v-else>
-      <Login></Login>
-    </div>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
 //import HelloWorld from './components/HelloWorld.vue'
-import DashBoard from './components/DashBoard.vue';
-import Login from './components/user/Login.vue';
+// import DashBoard from './components/DashBoard.vue';
+// import Login from './components/user/Login.vue';
 import axios from 'axios';
 import api from './api/api';
 import { useStore } from 'vuex';
@@ -22,8 +17,8 @@ export default {
   name: 'App',
   components: {
     //HelloWorld
-    DashBoard,
-    Login,
+    // DashBoard,
+    // Login,
   },
   setup() {
     const store = useStore();

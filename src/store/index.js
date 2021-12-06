@@ -3,15 +3,15 @@ import { createStore } from 'vuex';
 export default createStore({
   state: {
     token: null,
-    login: false,
+    islogin: false,
     url: 'http://api.dxdata.co.kr:3333',
   },
   getters: {
     token(state) {
       return state.token;
     },
-    login(state) {
-      return state.login;
+    islogin(state) {
+      return state.islogin;
     },
     url(state) {
       return state.url;
