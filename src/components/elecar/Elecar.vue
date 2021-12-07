@@ -34,6 +34,7 @@ export default {
           state.datas[i].current_gps_lon = data[2];
           state.datas[i].department = data[4];
           state.datas[i].last_timestamp = data[7];
+          state.datas[i].useYN = 1;
         }
       }
     };
@@ -78,8 +79,10 @@ export default {
       });
 
       socket.on('update_elecar', function (data) {
-        console.log('update');
         updataData(data[0]);
+
+        //detail쪽 리렌더링을위한 코드
+        state.detail = data[0];
       });
     });
 
@@ -109,8 +112,11 @@ export default {
             data: { eqp_id: data.eqp_id },
           })
             .then((response) => {
-              console.log(response);
-              alert('반납을 완료했습니다.');
+              if (response.data.affectedRows === 1) {
+                alert('반납을 완료했습니다.');
+              } else {
+                alert('오류가 발생했습니다.');
+              }
             })
             .catch((err) => {
               console.log(err);

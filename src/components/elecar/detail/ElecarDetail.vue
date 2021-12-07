@@ -160,7 +160,11 @@
         >
           대여하기
         </button>
-        <button class="btn btn-warning" v-else-if="checkDepartment()">
+        <button
+          class="btn btn-warning"
+          v-else-if="checkDepartment()"
+          v-on:click="returnElecar()"
+        >
           반납하기
         </button>
         <button class="btn btn-secondary" v-else disabled>사용중</button>
@@ -337,7 +341,28 @@ export default {
       }
     };
 
-    return { state, rent, search, checkDepartment };
+    let returnElecar = () => {
+      if (confirm('반납하시겠습니까?')) {
+        axios({
+          method: 'post',
+          url: url + '/elecar/return',
+          headers: { Authorization: 'Bearer ' + api.getCookie('auth') },
+          data: { eqp_id: state.data.eqp_id },
+        })
+          .then((response) => {
+            if (response.data.affectedRows === 1) {
+              alert('반납을 완료했습니다.');
+            } else {
+              alert('오류가 발생했습니다.');
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+    };
+
+    return { state, rent, search, checkDepartment, returnElecar };
   },
 };
 </script>

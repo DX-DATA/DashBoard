@@ -62,11 +62,7 @@
 
     <div class="custom-modal" v-on:click="closeModal"></div>
     <div class="modal-content">
-      <ElecarDetail
-        :data="state.detail"
-        :checkDepartment="checkDepartment"
-        :key="state.detail"
-      />
+      <ElecarDetail :data="state.detail" :key="state.detail" />
     </div>
   </div>
 </template>
