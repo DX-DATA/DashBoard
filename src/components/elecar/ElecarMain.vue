@@ -3,9 +3,7 @@
     <UsingTable :routeData="routeData" />
     <article class="card grid-item">
       <h4>실시간 고소차 위치</h4>
-      <table class="table table-hover">
-        카카오맵
-      </table>
+      <KakaoMap />
     </article>
     <article id="usage" class="card grid-item">
       <h4>주간 고소차 사용량</h4>
@@ -18,10 +16,12 @@
 
 <script>
 import UsingTable from './UsingTable.vue';
+import KakaoMap from '../modules/usingElecarMap.vue';
 
 export default {
   components: {
     UsingTable,
+    KakaoMap,
   },
   props: {
     routeData: Object,
