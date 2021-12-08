@@ -89,6 +89,7 @@ export default {
     let state = reactive({
       datas: [],
       detail: '',
+      reserveDetail: '',
       click: (data) => {
         state.detail = data;
         document.getElementsByClassName('custom-modal')[0].style.display =
@@ -122,6 +123,13 @@ export default {
               console.log(err);
             });
         }
+      },
+      clickReserv: (data) => {
+        state.reserveDetail = data;
+        document.getElementsByClassName('custom-modal')[0].style.display =
+          'block';
+        document.getElementsByClassName('reserve-content')[0].style.display =
+          'block';
       },
     });
 

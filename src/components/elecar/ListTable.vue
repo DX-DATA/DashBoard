@@ -54,7 +54,12 @@
             <button class="btn btn-secondary" disabled>사용중</button>
           </td>
           <td style="width: 120px">
-            <button class="btn btn-success">예약하기</button>
+            <button
+              class="btn btn-success"
+              v-on:click="state.clickReserv(data)"
+            >
+              예약하기
+            </button>
           </td>
         </tr>
       </tbody>
@@ -64,6 +69,9 @@
     <div class="modal-content">
       <ElecarDetail :data="state.detail" :key="state.detail" />
     </div>
+    <div class="reserve-content">
+      <Reservation :data="state.reserveDetail" :key="state.reserveDetail" />
+    </div>
   </div>
 </template>
 
@@ -72,8 +80,9 @@ import ElecarDetail from './detail/ElecarDetail.vue';
 // import axios from 'axios';
 // import { useStore } from 'vuex';
 // import api from '../../api/api';
+import Reservation from './Reservation.vue';
 export default {
-  components: { ElecarDetail },
+  components: { ElecarDetail, Reservation },
   props: {
     state: Object,
   },
@@ -84,6 +93,8 @@ export default {
     let closeModal = () => {
       document.getElementsByClassName('custom-modal')[0].style.display = 'none';
       document.getElementsByClassName('modal-content')[0].style.display =
+        'none';
+      document.getElementsByClassName('reserve-content')[0].style.display =
         'none';
     };
 
@@ -147,6 +158,32 @@ th {
   -webkit-animation: fadein 0.4s; /* Safari and Chrome */
   -o-animation: fadein 0.4s; /* Opera */
   overflow: auto;
+}
+
+.reserve-content {
+  display: none; /* Hidden by default */
+  padding: 10px;
+  position: fixed; /* Stay in place */
+  background-color: #fefefe;
+  z-index: 101; /* Sit on top */
+  margin-left: 20%;
+  border: 1px solid #888;
+  width: 50%;
+  height: 60vh;
+  top: 15vh;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  animation: fadein 0.4s;
+  -moz-animation: fadein 0.4s; /* Firefox */
+  -webkit-animation: fadein 0.4s; /* Safari and Chrome */
+  -o-animation: fadein 0.4s; /* Opera */
+  overflow: auto;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.reserve-content::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera*/
 }
 
 @keyframes fadein {
@@ -230,6 +267,27 @@ th {
     -moz-animation: fadein 0.4s; /* Firefox */
     -webkit-animation: fadein 0.4s; /* Safari and Chrome */
     -o-animation: fadein 0.4s; /* Opera */
+  }
+
+  .reserve-content {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    background-color: #fefefe;
+    z-index: 101; /* Sit on top */
+    margin-left: 1%;
+    padding: 0;
+    border: 1px solid #888;
+    width: 98%;
+    top: 10%;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    animation: fadein 0.4s;
+    -moz-animation: fadein 0.4s; /* Firefox */
+    -webkit-animation: fadein 0.4s; /* Safari and Chrome */
+    -o-animation: fadein 0.4s; /* Opera */
+    overflow: auto;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
   }
 }
 </style>

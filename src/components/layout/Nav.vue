@@ -25,6 +25,11 @@
         >
       </li>
       <li>
+        <router-link to="/welding" class="nav_link text-white">
+          <i class="fas fa-bolt"></i> 용접기</router-link
+        >
+      </li>
+      <li>
         <a href="#" v-on:click="logout" class="nav_link text-white">로그아웃</a>
       </li>
     </ul>

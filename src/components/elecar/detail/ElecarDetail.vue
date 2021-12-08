@@ -157,6 +157,7 @@
           class="btn btn-primary"
           v-if="!state.bool"
           v-on:click="rent.postRent"
+          style="grid-column: 1 / 3"
         >
           대여하기
         </button>
@@ -164,12 +165,18 @@
           class="btn btn-warning"
           v-else-if="checkDepartment()"
           v-on:click="returnElecar()"
+          style="grid-column: 1 / 3"
         >
           반납하기
         </button>
-        <button class="btn btn-secondary" v-else disabled>사용중</button>
-
-        <button class="btn btn-success">예약하기</button>
+        <button
+          class="btn btn-secondary"
+          v-else
+          disabled
+          style="grid-column: 1 / 3"
+        >
+          사용중
+        </button>
 
         <label class="label-input">경로 상세 조회</label>
 
