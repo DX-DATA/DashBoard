@@ -1,27 +1,24 @@
 <template>
   <div class="container-fluid">
     <UsingTable :routeData="routeData" />
-    <article class="card grid-item">
+    <section class="card grid-item">
       <h4>실시간 고소차 위치</h4>
-      <table class="table table-hover">
-        카카오맵
-      </table>
-    </article>
-    <article id="usage" class="card grid-item">
-      <h4>주간 고소차 사용량</h4>
-      <table class="table table-hover">
-        대충 그래프 들어있다는 내용
-      </table>
-    </article>
+      <KakaoMap />
+    </section>
+    <AmountUsed />
   </div>
 </template>
 
 <script>
 import UsingTable from './UsingTable.vue';
+import KakaoMap from '../modules/usingElecarMap.vue';
+import AmountUsed from './AmountUsed.vue';
 
 export default {
   components: {
     UsingTable,
+    KakaoMap,
+    AmountUsed,
   },
   props: {
     routeData: Object,

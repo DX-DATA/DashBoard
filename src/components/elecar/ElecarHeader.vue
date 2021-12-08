@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-      <router-link class="navbar-brand" to="/elecar/">고소차</router-link>
+      <div class="navbar-brand">고소차</div>
       <button
         class="navbar-toggler"
         type="button"
@@ -27,4 +27,8 @@
   </nav>
 </template>
 
-<style scoped></style>
+<style scoped>
+.navbar-brand {
+  font-weight: bold;
+}
+</style>
