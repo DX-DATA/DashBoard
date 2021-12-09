@@ -113,6 +113,9 @@ export default {
             .match(search.data.toLowerCase()) ||
           props.state.datas[i].department
             .toLowerCase()
+            .match(search.data.toLowerCase()) ||
+          props.state.datas[i].last_timestamp
+            .toLowerCase()
             .match(search.data.toLowerCase())
         ) {
           temp.push(props.state.datas[i]);
