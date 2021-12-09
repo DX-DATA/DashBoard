@@ -6,9 +6,10 @@
         type="search"
         placeholder="Search"
         aria-label="Search"
-        style="width: 15%"
+        style="width: 20%"
+        v-model="search.data"
+        v-on:change="search.onSearch"
       />
-      <button class="btn btn-outline-primary">Search</button>
     </div>
     <table class="table table-hover align-middle">
       <thead>
@@ -20,8 +21,8 @@
         <th>대여</th>
         <th>예약</th>
       </thead>
-      <tbody :key="state.datas">
-        <tr v-for="data in state.datas" v-bind:key="data">
+      <tbody :key="table.datas">
+        <tr v-for="data in table.datas" v-bind:key="data">
           <td v-on:click="state.click(data)">
             {{ data.eqp_id }}
           </td>
@@ -76,6 +77,8 @@
 </template>
 
 <script>
+import { watch } from 'vue';
+import { reactive } from 'vue-demi';
 import ElecarDetail from './detail/ElecarDetail.vue';
 // import axios from 'axios';
 // import { useStore } from 'vuex';
@@ -86,9 +89,38 @@ export default {
   props: {
     state: Object,
   },
-  setup() {
+  setup(props) {
     // let store = useStore();
     // let url = store.getters.url;
+
+    let table = reactive({
+      datas: props.state.datas,
+    });
+
+    let search = reactive({
+      data: '',
+      onSearch: () => {
+        console.log(table.datas);
+      },
+    });
+
+    watch(search, () => {
+      let temp = [];
+      for (let i = 0; i < props.state.datas.length; i++) {
+        if (
+          props.state.datas[i].eqp_id
+            .toLowerCase()
+            .match(search.data.toLowerCase()) ||
+          props.state.datas[i].department
+            .toLowerCase()
+            .match(search.data.toLowerCase())
+        ) {
+          temp.push(props.state.datas[i]);
+        }
+      }
+
+      table.datas = temp;
+    });
 
     let closeModal = () => {
       document.getElementsByClassName('custom-modal')[0].style.display = 'none';
@@ -98,7 +130,7 @@ export default {
         'none';
     };
 
-    return { closeModal };
+    return { closeModal, table, search };
   },
 };
 </script>
