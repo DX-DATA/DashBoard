@@ -331,7 +331,7 @@ export default {
             let start = parseInt(data[i].start_time.slice(0, 2));
             let end = parseInt(data[i].end_time.slice(0, 2));
 
-            for (let k = start; k <= end; k++) {
+            for (let k = start; k < end; k++) {
               reserve.times[k] = true;
               reserve.info[k] = { department: '', reserv_id: '' };
               reserve.info[k].department = data[i].department;
