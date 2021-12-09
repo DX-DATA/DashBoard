@@ -7,6 +7,12 @@ import ElecarMain from '../components/elecar/ElecarMain';
 import ElecarList from '../components/elecar/ElecarList';
 import ElecarRent from '../components/elecar/ElecarRent';
 import DashBoard from '../components/DashBoard';
+
+/* 용접기 */
+import Welding from '../components/welding/Welding';
+import WeldingMain from '../components/welding/WeldingMain';
+import WeldingList from '../components/welding/WeldingList';
+
 import Login from '../components/user/Login';
 import api from '../api/api';
 const routes = [
@@ -51,6 +57,23 @@ const routes = [
             path: 'rent',
             name: 'rent',
             component: ElecarRent,
+          },
+        ],
+      },
+      {
+        path: 'welding',
+        name: 'welding',
+        component: Welding,
+        children: [
+          {
+            path: '',
+            name: 'weldingMain',
+            component: WeldingMain,
+          },
+          {
+            path: 'list',
+            name: 'weldingList',
+            component: WeldingList,
           },
         ],
       },
