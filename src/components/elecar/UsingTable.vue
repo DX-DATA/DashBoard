@@ -1,5 +1,5 @@
 <template>
-  <article class="card grid-item">
+  <article class="card grid-item using">
     <h4>현재 사용중인 고소차</h4>
     <table class="table table-hover">
       <thead>
@@ -47,4 +47,15 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.using {
+  height: 450px;
+  overflow-y: auto;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.using::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera*/
+}
+</style>

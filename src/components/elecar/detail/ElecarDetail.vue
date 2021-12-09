@@ -318,8 +318,8 @@ export default {
           .then((response) => {
             search.positions = response.data;
             search.data = response.data;
-            state.mapOption.center.lat = response.data[2].gps_lat;
-            state.mapOption.center.lng = response.data[2].gps_lon;
+            state.mapOption.center.lat = response.data[1].gps_lat;
+            state.mapOption.center.lng = response.data[1].gps_lon;
           })
           .catch((err) => {
             console.log(err);
