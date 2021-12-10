@@ -54,6 +54,7 @@ export default {
               document.cookie = 'auth=' + response.data.token + '; path=/;';
             };
             await setcookie(response);
+            localStorage.setItem('department', response.data.department);
             location.href = '/home';
           }
         })

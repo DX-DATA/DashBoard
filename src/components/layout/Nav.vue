@@ -87,7 +87,7 @@ export default {
       };
 
       await setcookie();
-
+      localStorage.setItem('department', '');
       this.store.commit('setToken', '');
     },
   },
