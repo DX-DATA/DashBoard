@@ -1,5 +1,5 @@
 <template>
-  <article class="card grid-item using">
+  <section class="card grid-item using">
     <h4>현재 사용중인 고소차</h4>
     <table class="table table-hover">
       <thead>
@@ -17,7 +17,7 @@
         </tr>
       </tbody>
     </table>
-  </article>
+  </section>
 </template>
 
 <script>

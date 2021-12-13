@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid text-center">
     <div>
-      <h5>고소차 목록</h5>
+      <h4>고소차 목록</h4>
     </div>
     <Table :state="routeData" />
   </div>
@@ -28,7 +28,11 @@ export default {
   widows: 99%;
   background: white;
   margin-top: 20px;
-  padding: 0px;
+  padding: 10px;
+}
+
+h4 {
+  font-weight: bold;
 }
 
 table {

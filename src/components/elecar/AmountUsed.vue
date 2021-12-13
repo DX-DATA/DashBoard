@@ -65,7 +65,8 @@ export default {
 };
 </script>
 
-<style>
-.line {
+<style scoped>
+.chart_card {
+  margin-top: 0px;
 }
 </style>
