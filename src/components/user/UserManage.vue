@@ -1,5 +1,4 @@
 <template>
-  <h2 style="text-align: center">사용자 권한 설정</h2>
   <section class="card">
     <h4>사용자 목록</h4>
     <table class="table table-hover">
