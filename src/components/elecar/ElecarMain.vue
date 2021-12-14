@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid">
+  <div class="container-fluid font-align">
     <UsingTable :routeData="routeData" />
     <section class="card grid-item">
       <h4>실시간 고소차 위치</h4>
@@ -33,9 +33,17 @@ export default {
   grid-template-columns: 3fr 2fr;
 }
 
+.container-fluid >>> h4 {
+  font-weight: bold;
+}
+
+.font-align {
+  text-align: center;
+}
+
 .grid-item {
   margin: 10px;
-  padding: 5px;
+  padding: 10px;
 }
 
 #usage {
