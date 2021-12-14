@@ -73,7 +73,7 @@
       dtd
     </div>
     <div class="modal-content" ref="modal_content">
-      <!-- <ElecarDetail :data="state.detail" :key="state.detail" /> -->
+      <WeldingDetail :data="detail.data" :key="detail.data" />
     </div>
     <div class="reserve-content" ref="reserve_content">
       <!-- <Reservation :data="state.reserveDetail" :key="state.reserveDetail" /> -->
@@ -83,9 +83,10 @@
 
 <script>
 import { onMounted } from 'vue-demi';
-import { ref } from 'vue';
+import { reactive, ref } from 'vue';
+import WeldingDetail from './detail/WeldingDetail.vue';
 export default {
-  components: {},
+  components: { WeldingDetail },
   props: {
     state: Object,
   },
@@ -97,9 +98,14 @@ export default {
 
     onMounted(() => {});
 
+    let detail = reactive({
+      data: '',
+    });
+
     let click = (data) => {
       console.log(data);
       console.log(props);
+      detail.data = data;
       custom_modal.value.style.display = 'block';
       modal_content.value.style.display = 'block';
     };
@@ -112,7 +118,14 @@ export default {
         'none';
     };
 
-    return { closeModal, click, custom_modal, modal_content, reserve_content };
+    return {
+      closeModal,
+      click,
+      custom_modal,
+      modal_content,
+      reserve_content,
+      detail,
+    };
   },
 };
 </script>

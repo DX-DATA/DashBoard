@@ -176,6 +176,7 @@ export default {
       doReserve: () => {
         if (reserve.param.start_time >= reserve.param.end_time) {
           alert('올바른 시간대를 입력해 주세요');
+          return;
         }
 
         let start = parseInt(reserve.param.start_time);
@@ -184,7 +185,7 @@ export default {
         for (let i = 0; i < reserve.reserved_time.length; i++) {
           if (
             reserve.reserved_time[i] >= start &&
-            reserve.reserved_time[i] <= end
+            reserve.reserved_time[i] < end
           ) {
             alert('이미 예약되어있는 시간입니다.');
             return;
