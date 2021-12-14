@@ -33,39 +33,10 @@
         <a href="#" v-on:click="logout" class="nav_link text-white">로그아웃</a>
       </li>
     </ul>
-    <div class="dropdown">
-      <a
-        href="#"
-        class="
-          d-flex
-          align-items-center
-          text-white text-decoration-none
-          dropdown-toggle
-        "
-        id="dropdownUser1"
-        data-bs-toggle="dropdown"
-        aria-expanded="false"
+    <div v-if="admin == 1">
+      <router-link to="/userManage" class="nav_link text-white">
+        <i class="fas fa-cog"></i> 회원 관리</router-link
       >
-        <img
-          src="https://github.com/mdo.png"
-          alt=""
-          width="32"
-          height="32"
-          class="rounded-circle me-2"
-        />
-        <strong>Test</strong>
-      </a>
-      <ul
-        class="dropdown-menu dropdown-menu-dark text-small shadow"
-        aria-labelledby="dropdownUser1"
-        style=""
-      >
-        <li><a class="dropdown-item" href="#">New project...</a></li>
-        <li><a class="dropdown-item" href="#">Settings</a></li>
-        <li><a class="dropdown-item" href="#">Profile</a></li>
-        <li><hr class="dropdown-divider" /></li>
-        <li><a class="dropdown-item" v-on:click="logout">Sign out</a></li>
-      </ul>
     </div>
   </div>
 </template>
@@ -77,6 +48,7 @@ export default {
   data() {
     return {
       store: useStore(),
+      admin: localStorage.getItem('admin'),
     };
   },
   methods: {
@@ -85,9 +57,9 @@ export default {
         document.cookie =
           'auth=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
       };
-
       await setcookie();
       localStorage.setItem('department', '');
+      localStorage.setItem('admin', '');
       this.store.commit('setToken', '');
     },
   },
