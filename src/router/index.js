@@ -14,6 +14,8 @@ import WeldingMain from '../components/welding/WeldingMain';
 import WeldingList from '../components/welding/WeldingList';
 
 import Login from '../components/user/Login';
+import UserManage from '../components/user/UserManage';
+
 import api from '../api/api';
 const routes = [
   {
@@ -76,6 +78,11 @@ const routes = [
             component: WeldingList,
           },
         ],
+      },
+      {
+        path: 'userManage',
+        name: 'userManage',
+        component: UserManage,
       },
     ],
   },
