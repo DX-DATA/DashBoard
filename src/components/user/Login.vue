@@ -19,7 +19,7 @@
 
       <br />
       <div class="forget">
-        <a href="#">비밀번호를 잊어버리셨나요?</a>
+        <router-link to="/signUp"> 회원가입</router-link>
       </div>
     </div>
   </div>
