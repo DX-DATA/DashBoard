@@ -21,18 +21,14 @@
         <tr v-for="(user, index) in users" :key="user">
           <td>{{ index }}</td>
           <td>{{ user.user_id }}</td>
-          <td v-if="focused[index]">
+          <td>
             <input
               type="text"
               class="form-control"
-              @blur="focused[index] = false"
               v-model="user.department"
               style="width: 70%; display: inline; margin: 0"
               @change="onChangeAuth(user)"
             />
-          </td>
-          <td v-else v-on:click="focused[index] = true">
-            {{ user.department }}
           </td>
 
           <td>
