@@ -3,34 +3,43 @@
     <div class="form">
       <img src="/logo.png" />
       <div class="input">
-        <div class="title">ID</div>
+        <label class="title">ID</label>
         <input
           type="text"
           class="form-control"
-          placeholder="ID를 입력해주세요"
+          :class="{ 'is-valid': isValid[0], 'is-invalid': isInValid[0] }"
+          placeholder="Enter ID"
           v-model="ID"
+          @change="valid(ID, 0)"
         />
+        <div class="invalid-feedback">빈칸을 채워주세요</div>
       </div>
       <div class="input">
-        <div class="title">PW</div>
+        <label class="title">PW</label>
         <input
           type="text"
           class="form-control"
-          placeholder="비밀번호를 입력해주세요"
+          :class="{ 'is-valid': isValid[1], 'is-invalid': isInValid[1] }"
+          placeholder="Enter Password"
           v-model="PW"
+          @change="valid(PW, 1)"
         />
+        <div class="invalid-feedback">빈칸을 채워주세요</div>
       </div>
       <div class="input">
-        <div class="title">부서</div>
+        <label class="title">부서</label>
         <input
           type="text"
           class="form-control"
-          placeholder="소속된 부서를 입력해주세요"
+          :class="{ 'is-valid': isValid[2], 'is-invalid': isInValid[2] }"
+          placeholder="Enter Department"
           v-model="department"
+          @change="valid(department, 2)"
         />
+        <div class="invalid-feedback">빈칸을 채워주세요</div>
       </div>
       <div class="select">
-        <button type="button" class="btn btn-primary" @click="console">
+        <button type="button" class="btn btn-primary" @click="signUp">
           가입
         </button>
         <button type="button" class="btn btn-light" @click="back">취소</button>
@@ -40,6 +49,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   name: 'SignUp',
   data() {
@@ -47,11 +58,48 @@ export default {
       ID: '',
       PW: '',
       department: '',
+      isValid: [false, false, false],
+      isInValid: [false, false, false],
     };
   },
   methods: {
+    signUp() {
+      const userInfo = {
+        id: this.ID,
+        password: this.PW,
+        department: this.department,
+      };
+      if (this.ID == '' || this.PW == '' || this.department == '') {
+        if (this.ID == '') this.isInValid[0] = true;
+        if (this.PW == '') this.isInValid[1] = true;
+        if (this.department == '') this.isInValid[2] = true;
+      } else {
+        axios({
+          method: 'post',
+          url: 'http://api.dxdata.co.kr:3333/auth/signup',
+          data: userInfo,
+        })
+          .then((res) =>
+            res.data.affectedRows == 1
+              ? (alert('회원가입이 완료되었습니다.'), this.$router.go(-1))
+              : res.data.code == 'ER_DUP_ENTRY'
+              ? alert('ID가 중복됩니다.')
+              : alert('알 수 없는 원인으로 회원가입에 실패했습니다.')
+          )
+          .catch((e) => console.log(e));
+      }
+    },
     back() {
       this.$router.go(-1);
+    },
+    valid(str, idx) {
+      if (str == '') {
+        this.isValid[idx] = false;
+        this.isInValid[idx] = true;
+      } else {
+        this.isInValid[idx] = false;
+        this.isValid[idx] = true;
+      }
     },
   },
 };
@@ -76,13 +124,11 @@ export default {
 }
 .input {
   margin: 20px 0px;
-  display: flex;
   align-items: center;
+  text-align: left;
 }
 .title {
-  text-align: left;
   font-weight: bold;
-  width: 70px;
 }
 .select button {
   margin: 0 20px;
