@@ -1,7 +1,7 @@
 <template>
   <section class="card">
     <h4>사용자 목록</h4>
-    <table class="table table-hover">
+    <table class="table table-hover align-middle">
       <thead>
         <!-- <tr v-for="elecar in elecarFilter" :key="elecar">
           <td>{{ elecar.eqp_id }}</td>
@@ -10,16 +10,31 @@
           <td>{{ elecar.end_time }}</td>
         </tr> -->
         <tr>
+          <td>No</td>
           <td>유저 ID</td>
-          <td>부서</td>
+          <td style="width: 30%">부서</td>
           <td>권한</td>
           <td>삭제</td>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="user in users" :key="user">
+        <tr v-for="(user, index) in users" :key="user">
+          <td>{{ index }}</td>
           <td>{{ user.user_id }}</td>
-          <td>{{ user.department }}</td>
+          <td v-if="focused[index]">
+            <input
+              type="text"
+              class="form-control"
+              @blur="focused[index] = false"
+              v-model="user.department"
+              style="width: 70%; display: inline; margin: 0"
+              @change="onChangeAuth(user)"
+            />
+          </td>
+          <td v-else v-on:click="focused[index] = true">
+            {{ user.department }}
+          </td>
+
           <td>
             <select
               class="form-select"
@@ -56,13 +71,17 @@ export default {
     return {
       users: [],
       changeUsers: [],
+      focused: [],
     };
   },
   methods: {
     getUsers() {
-      axios
-        .get('http://api.dxdata.co.kr:3333/auth/list')
-        .then((res) => (this.users = res.data));
+      axios.get('http://api.dxdata.co.kr:3333/auth/list').then((res) => {
+        this.users = res.data;
+        for (let i = 0; i < res.data.length; i++) {
+          this.focused.push(false);
+        }
+      });
     },
     onChangeAuth(user) {
       this.changeUsers = this.changeUsers.filter(
@@ -78,7 +97,7 @@ export default {
         data: this.changeUsers,
       })
         .then((res) =>
-          res.data.status == 1 ? alert('사용자 권한이 수정되었습니다.') : {}
+          res.data.status == 1 ? alert('사용자 정보가 수정되었습니다.') : {}
         )
         .catch((e) => console.log(e));
     },
@@ -99,6 +118,9 @@ export default {
           )
           .catch((e) => console.log(e));
       }
+    },
+    log(e) {
+      console.log(e);
     },
   },
   mounted() {
