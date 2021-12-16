@@ -8,10 +8,11 @@
 </template>
 
 <script>
-import { computed, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 
 import { LineChart } from 'vue-chart-3';
 import { Chart, registerables } from 'chart.js';
+import axios from 'axios';
 
 Chart.register(...registerables);
 
@@ -21,17 +22,28 @@ export default {
     LineChart,
   },
   setup() {
-    const label = ref([
-      '월요일',
-      '화요일',
-      '수요일',
-      '목요일',
-      '금요일',
-      '토요일',
-      '일요일',
-    ]);
+    const label = ref([]);
+    const used = ref([]);
 
-    const used = ref([30, 40, 34, 50, 43, 20, 15]);
+    onMounted(async () => {
+      const tempLabel = [];
+      const tempUsed = [];
+      let reverseData = [];
+      await axios
+        .get('http://api.dxdata.co.kr:3333/elecar/usage')
+        .then((res) => {
+          reverseData = res.data;
+          reverseData.reverse();
+
+          reverseData.map((v) => {
+            tempLabel.push(v.date);
+            tempUsed.push(v.amount);
+          });
+        });
+
+      label.value = tempLabel;
+      used.value = tempUsed;
+    });
 
     const lineData = computed(() => ({
       labels: label.value,

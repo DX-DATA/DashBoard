@@ -3,7 +3,7 @@
     <UsingTable :routeData="routeData" />
     <section class="card grid-item">
       <h4>실시간 고소차 위치</h4>
-      <KakaoMap />
+      <KakaoMap :routeData="routeData" />
     </section>
     <AmountUsed />
   </div>
