@@ -49,13 +49,9 @@ export default {
 
 <style>
 .using {
-  height: 450px;
+  height: 460px;
   overflow-y: auto;
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
-}
-
-.using::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Opera*/
 }
 </style>
