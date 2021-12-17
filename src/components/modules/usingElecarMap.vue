@@ -29,6 +29,7 @@ export default {
   },
   mounted() {
     this.initMap();
+    this.displayMarker();
   },
   methods: {
     async initMap() {
