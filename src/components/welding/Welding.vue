@@ -8,21 +8,24 @@
 </template>
 
 <script>
-import { onMounted, reactive } from 'vue-demi';
+import { onMounted, onUnmounted, reactive } from 'vue-demi';
 import WeldingHeader from './WeldingHeader.vue';
 import { useStore } from 'vuex';
 import axios from 'axios';
 import api from '../../api/api';
+import io from 'socket.io/client-dist/socket.io';
+
 export default {
   components: { WeldingHeader },
 
   setup() {
     let store = useStore();
     const url = store.getters.url;
+    let socket = io('http://api.dxdata.co.kr:3333');
 
     let state = reactive({
-      tbar: '',
-      gbs03: '',
+      tbar: [],
+      gbs03: [],
     });
 
     onMounted(async () => {
@@ -51,6 +54,33 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+
+      socket.on('rent_welding', function (data) {
+        console.log(data);
+        updateData(data[0]);
+      });
+    });
+
+    let updateData = (data) => {
+      if (data.eqp_id.slice(0, 4) === 'TBAR') {
+        state.tbar.find((v) => {
+          if (v.eqp_id === data.eqp_id) {
+            v.department = data.department;
+            v.use_yn = data.use_yn;
+          }
+        });
+      } else {
+        state.gbs03.find((v) => {
+          if (v.eqp_id === data.eqp_id) {
+            v.department = data.department;
+            v.use_yn = data.use_yn;
+          }
+        });
+      }
+    };
+
+    onUnmounted(() => {
+      socket.disconnect();
     });
 
     return { state };
