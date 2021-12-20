@@ -1,14 +1,15 @@
 <template>
   <div class="container-fluid font-align">
-    <div class="container">사용중인 용접기</div>
-    <div class="container">사용률 상위</div>
-    <div class="container">현재 전력 사용률 그래프</div>
-    <div class="container">일일 전력 사용률 그래프</div>
+    <div class="card"><h4>사용중인 용접기</h4></div>
+    <div class="card"><h4>사용률 상위</h4></div>
+    <div class="card"><h4>주간 전력 사용률</h4></div>
+    <div class="card"><h4>전날 전력 사용률</h4></div>
   </div>
 </template>
 
 <script>
 export default {
+  name: 'WeldingMain',
   components: {},
   props: {},
 };
@@ -18,11 +19,11 @@ export default {
 .container-fluid {
   margin-top: 10px;
   display: grid;
-  grid-template-columns: 2fr 2fr;
+  grid-template-columns: 2fr 1fr;
   gap: 10px;
 }
 
-.container {
+.card {
   background: white;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   border-radius: 5px;
@@ -42,15 +43,15 @@ export default {
   padding: 10px;
 }
 
-#usage {
+/* #usage {
   grid-column-start: 1;
   grid-column-end: 3;
-}
+} */
 
-@media (max-width: 768px) {
+/* @media (max-width: 768px) {
   .container-fluid {
     display: flex;
     flex-direction: column;
   }
-}
+} */
 </style>
