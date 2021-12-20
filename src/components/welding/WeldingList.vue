@@ -102,7 +102,11 @@
       <WeldingDetail :data="detail.data" :key="detail.data" />
     </div>
     <div class="rent-content" ref="rent_content">
-      <WeldingRent :data="detail.data" :key="detail.data" />
+      <WeldingRent
+        :data="detail.data"
+        :key="detail.data"
+        @closeModal="closeModal"
+      />
     </div>
     <div class="reserve-content" ref="reserve_content">
       <Reservation :data="reserve.data" :key="reserve.data" />
@@ -338,7 +342,7 @@ th {
   margin-left: 28%;
   border: 1px solid #888;
   width: 30%;
-  height: 60vh;
+  height: 425px;
   top: 15vh;
   border-radius: 10px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);

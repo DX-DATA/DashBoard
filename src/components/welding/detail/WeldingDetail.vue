@@ -2,17 +2,18 @@
   <div class="detail-container">
     <table class="table table-hover align-middle">
       <thead>
-        <th>eqp_id</th>
-        <th>date</th>
-        <th>acquisition_rate</th>
-        <th>welding_time</th>
-        <th>avg_amp</th>
-        <th>avg_volt</th>
-        <th>avg_welding_volt</th>
-        <th>avg_wirespeed</th>
-        <th>sum_wire</th>
-        <th>sum_inching_wire</th>
-        <th>sum_total_wire</th>
+        <th>장비 ID</th>
+        <th>일자</th>
+        <th>데이터 취득률</th>
+        <th>용접 시간</th>
+        <th>평균 전력</th>
+        <th>평균 전압</th>
+        <th>실제 사용 전압</th>
+        <th>와이어 사용 속도</th>
+        <th>사용 전 와이어</th>
+        <th>와이어 사용량</th>
+        <th>사용 후 와이어</th>
+        <th>사용 전력량</th>
       </thead>
       <tbody>
         <tr v-for="data in state.datas" :key="data">
@@ -27,6 +28,7 @@
           <td>{{ data.sum_wire }}</td>
           <td>{{ data.sum_inching_wire }}</td>
           <td>{{ data.sum_total_wire }}</td>
+          <td>{{ (data.avg_volt * data.avg_amp).toFixed(2) }}</td>
         </tr>
       </tbody>
     </table>

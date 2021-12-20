@@ -120,7 +120,7 @@ import { useStore } from 'vuex';
 // import axios from 'axios';
 export default {
   props: ['data'],
-  setup(props) {
+  setup(props, context) {
     const store = useStore();
     const url = store.getters.url;
 
@@ -178,6 +178,13 @@ export default {
           type: state.data.eqp_id.slice(0, 4) === 'TBAR' ? 'tbar' : 'gbs03',
         };
 
+        let now = new Date();
+        let start = new Date(params.start_time);
+        if (now > start) {
+          alert('이미 지난 시간입니다.');
+          return;
+        }
+
         if (
           confirm(
             '용접기 ID : ' +
@@ -200,6 +207,7 @@ export default {
                 ('에러가 발생했습니다 다시 시도해 주세요');
               } else {
                 alert('대여를 완료했습니다.');
+                context.emit('closeModal');
                 // window.location.reload();
               }
             })
