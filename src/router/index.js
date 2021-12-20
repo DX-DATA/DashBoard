@@ -10,7 +10,7 @@ import DashBoard from '../components/DashBoard';
 
 /* 용접기 */
 import Welding from '../components/welding/Welding';
-import WeldingMain from '../components/welding/WeldingMain';
+import WeldingMain from '../components/welding/main/WeldingMain';
 import WeldingList from '../components/welding/WeldingList';
 
 import Login from '../components/user/Login';
