@@ -3,24 +3,26 @@
   <div class="container-fluid font-align">
     <UsingTable :state="getUsingGBS" />
     <div class="card"><h4>사용률 순위 그래프</h4></div>
-    <div class="card"><h4>주간 전력 사용률</h4></div>
+    <AmountUsed type="gbs03" />
     <div class="card"><h4>전날 전력 사용률</h4></div>
   </div>
   <h1 class="font-align">TBAR</h1>
   <div class="container-fluid font-align">
     <UsingTable :state="getUsingTBAR" />
     <div class="card"><h4>사용률 순위 그래프</h4></div>
-    <div class="card"><h4>주간 전력 사용률</h4></div>
+    <AmountUsed type="tbar" />
+
     <div class="card"><h4>전날 전력 사용률</h4></div>
   </div>
 </template>
 
 <script>
 import UsingTable from './UsingTable.vue';
+import AmountUsed from './AmountUsed.vue';
 
 export default {
   name: 'WeldingMain',
-  components: { UsingTable },
+  components: { UsingTable, AmountUsed },
   props: {
     state: Object,
   },
@@ -54,7 +56,6 @@ export default {
   background: white;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   border-radius: 5px;
-  height: 300px;
 }
 
 .container-fluid >>> h4 {
@@ -63,10 +64,5 @@ export default {
 
 .font-align {
   text-align: center;
-}
-
-.grid-item {
-  margin: 10px;
-  padding: 10px;
 }
 </style>
