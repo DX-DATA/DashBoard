@@ -1,15 +1,15 @@
 <template>
   <h1 class="font-align">GBS03</h1>
   <div class="container-fluid font-align">
-    <UsingTable :state="state" />
-    <div class="card"><h4>사용률 상위</h4></div>
+    <UsingTable :state="getUsingGBS" />
+    <div class="card"><h4>사용률 순위 그래프</h4></div>
     <div class="card"><h4>주간 전력 사용률</h4></div>
     <div class="card"><h4>전날 전력 사용률</h4></div>
   </div>
   <h1 class="font-align">TBAR</h1>
   <div class="container-fluid font-align">
-    <UsingTable :state="state" />
-    <div class="card"><h4>사용률 상위</h4></div>
+    <UsingTable :state="getUsingTBAR" />
+    <div class="card"><h4>사용률 순위 그래프</h4></div>
     <div class="card"><h4>주간 전력 사용률</h4></div>
     <div class="card"><h4>전날 전력 사용률</h4></div>
   </div>
@@ -24,6 +24,20 @@ export default {
   props: {
     state: Object,
   },
+  data() {
+    return {};
+  },
+  computed: {
+    getUsingGBS() {
+      const usingGBS = this.state.gbs03.filter((v) => v.use_yn == 1);
+      return usingGBS;
+    },
+    getUsingTBAR() {
+      const usingTBAR = this.state.tbar.filter((v) => v.use_yn == 1);
+      return usingTBAR;
+    },
+  },
+  methods: {},
 };
 </script>
 

@@ -67,6 +67,8 @@ export default {
           if (v.eqp_id === data.eqp_id) {
             v.department = data.department;
             v.use_yn = data.use_yn;
+            v.start_time = data.start_time;
+            v.end_time = data.end_time;
           }
         });
       } else {
@@ -74,6 +76,8 @@ export default {
           if (v.eqp_id === data.eqp_id) {
             v.department = data.department;
             v.use_yn = data.use_yn;
+            v.start_time = data.start_time;
+            v.end_time = data.end_time;
           }
         });
       }
