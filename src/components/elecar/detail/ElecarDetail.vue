@@ -274,6 +274,13 @@ export default {
             ':00',
         };
 
+        let now = new Date();
+        let start = new Date(params.start_time);
+        if (now > start) {
+          alert('이미 지난 시간입니다.');
+          return;
+        }
+
         if (
           confirm(
             '고소차 ID : ' +
