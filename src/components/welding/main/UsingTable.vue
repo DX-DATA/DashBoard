@@ -6,7 +6,7 @@
         <th>용접기 ID</th>
         <th>사용부서</th>
         <th>사용 시작 시간</th>
-        <th>사용 종료 시간</th>
+        <th>반납 예정 시간</th>
       </thead>
       <tbody :key="state">
         <tr v-for="welding in state" :key="welding">
@@ -26,18 +26,6 @@ export default {
   props: {
     state: Array,
   },
-  mounted() {
-    console.log(this.state);
-  },
-  // data() {
-  //   return {
-  //     useElecar: [],
-  //   };
-  // },
-  // beforeMount() {
-  //   this.useElecar = this.state.datas.filter((v) => v.useYN == 1);
-  //   console.log(this.useElecar);
-  // },
 };
 </script>
 

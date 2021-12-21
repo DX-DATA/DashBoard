@@ -69,16 +69,4 @@ export default {
   margin: 10px;
   padding: 10px;
 }
-
-/* #usage {
-  grid-column-start: 1;
-  grid-column-end: 3;
-} */
-
-/* @media (max-width: 768px) {
-  .container-fluid {
-    display: flex;
-    flex-direction: column;
-  }
-} */
 </style>
