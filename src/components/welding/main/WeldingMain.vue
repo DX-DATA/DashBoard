@@ -4,24 +4,26 @@
     <UsingTable :state="getUsingGBS" />
     <div class="card"><h4>사용률 순위 그래프</h4></div>
     <AmountUsed type="gbs03" />
-    <div class="card"><h4>전날 전력 사용률</h4></div>
+    <YesterdayUsage type="gbs03" />
+    <!-- <div class="card"><h4>전날 전력량 사용 비율</h4></div> -->
   </div>
   <h1 class="font-align" style="margin-top: 30px">TBAR</h1>
   <div class="container-fluid font-align">
     <UsingTable :state="getUsingTBAR" />
     <div class="card"><h4>사용률 순위 그래프</h4></div>
     <AmountUsed type="tbar" />
-    <div class="card"><h4>전날 전력 사용률</h4></div>
+    <div class="card"><h4>전날 전력량 사용 비율</h4></div>
   </div>
 </template>
 
 <script>
 import UsingTable from './UsingTable.vue';
 import AmountUsed from './AmountUsed.vue';
+import YesterdayUsage from './YesterdayUsage.vue';
 
 export default {
   name: 'WeldingMain',
-  components: { UsingTable, AmountUsed },
+  components: { UsingTable, AmountUsed, YesterdayUsage },
   props: {
     state: Object,
   },
