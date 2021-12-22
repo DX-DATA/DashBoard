@@ -6,12 +6,11 @@
     <AmountUsed type="gbs03" />
     <div class="card"><h4>전날 전력 사용률</h4></div>
   </div>
-  <h1 class="font-align">TBAR</h1>
+  <h1 class="font-align" style="margin-top: 30px">TBAR</h1>
   <div class="container-fluid font-align">
     <UsingTable :state="getUsingTBAR" />
     <div class="card"><h4>사용률 순위 그래프</h4></div>
     <AmountUsed type="tbar" />
-
     <div class="card"><h4>전날 전력 사용률</h4></div>
   </div>
 </template>
@@ -48,7 +47,7 @@ export default {
   margin-top: 10px;
   display: grid;
   grid-template-columns: 2fr 1fr;
-  gap: 10px;
+  gap: 20px;
 }
 
 .card {
