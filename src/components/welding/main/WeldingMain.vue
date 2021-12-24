@@ -2,17 +2,14 @@
   <h1 class="font-align">GBS03</h1>
   <div class="container-fluid font-align">
     <UsingTable :state="getUsingGBS" />
-    <div class="card"><h4>사용률 순위 그래프</h4></div>
     <AmountUsed type="gbs03" />
     <YesterdayUsage type="gbs03" />
-    <!-- <div class="card"><h4>전날 전력량 사용 비율</h4></div> -->
   </div>
   <h1 class="font-align" style="margin-top: 30px">TBAR</h1>
   <div class="container-fluid font-align">
     <UsingTable :state="getUsingTBAR" />
-    <div class="card"><h4>사용률 순위 그래프</h4></div>
     <AmountUsed type="tbar" />
-    <div class="card"><h4>전날 전력량 사용 비율</h4></div>
+    <YesterdayUsage type="tbar" />
   </div>
 </template>
 
@@ -45,14 +42,15 @@ export default {
 </script>
 
 <style scoped>
-.container-fluid {
+/* .container-fluid {
   margin-top: 10px;
   display: grid;
   grid-template-columns: 2fr 1fr;
   gap: 20px;
-}
+} */
 
 .card {
+  margin: 20px 0;
   padding: 10px;
   background: white;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
