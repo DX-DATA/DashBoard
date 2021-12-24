@@ -1,9 +1,33 @@
 <template>
   <section class="card grid-item">
-    <h4>전날 전력량 사용 비율</h4>
-    <article class="chart_card doughnut">
-      <DoughnutChart :chartData="doughnutData" :options="doughnutOption" />
-    </article>
+    <h4>전날 전력 사용량 순위 (10개)</h4>
+    <div class="row">
+      <div class="col table-scroll">
+        <table class="table table-hover">
+          <thead>
+            <th>용접기 ID</th>
+            <th>전력량</th>
+            <th>사용 시간</th>
+            <th>평균 전류량</th>
+            <th>평균 전압량</th>
+            <th>와이어 사용량</th>
+          </thead>
+          <tbody :key="weldings">
+            <tr v-for="welding in weldings" :key="welding">
+              <td>{{ welding.eqp_id }}</td>
+              <td>{{ welding.watt }}</td>
+              <td>{{ welding.welding_time }}</td>
+              <td>{{ welding.avg_amp }}</td>
+              <td>{{ welding.avg_volt }}</td>
+              <td>{{ welding.sum_inching_wire }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <article class="col col-lg-3 chart_card doughnut">
+        <DoughnutChart :chartData="doughnutData" :options="doughnutOption" />
+      </article>
+    </div>
   </section>
 </template>
 
@@ -28,6 +52,7 @@ export default {
 
     const label = ref([]);
     const usage = ref([]);
+    const weldings = ref([]);
 
     onMounted(async () => {
       const tempLabel = [];
@@ -42,6 +67,7 @@ export default {
           }
         )
         .then((res) => {
+          weldings.value = res.data;
           res.data.map((v) => {
             if (v.watt != 0) {
               tempLabel.push(v.eqp_id);
@@ -90,12 +116,16 @@ export default {
       },
     });
 
-    return { doughnutData, doughnutOption };
+    return { doughnutData, doughnutOption, weldings };
   },
 };
 </script>
 
-<style>
-.doughnut {
+<style scoped>
+.table-scroll {
+  height: 380px;
+  overflow-y: auto;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
 </style>
