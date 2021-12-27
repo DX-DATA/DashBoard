@@ -15,7 +15,9 @@
           <tbody :key="weldings">
             <tr v-for="welding in weldings" :key="welding">
               <td>{{ welding.eqp_id }}</td>
-              <td>{{ welding.watt }}</td>
+              <td>
+                {{ welding.watt != 0 ? welding.watt.toFixed(2) : welding.watt }}
+              </td>
               <td>{{ welding.welding_time }}</td>
               <td>{{ welding.avg_amp }}</td>
               <td>{{ welding.avg_volt }}</td>
