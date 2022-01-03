@@ -78,11 +78,11 @@ export default {
 }
 
 .form {
-  width: 40vh;
+  width: 50vh;
   margin: 0 auto;
   box-shadow: rgba(149, 157, 165, 0.4) 0px 8px 24px;
   border-radius: 10px;
-  height: 375px;
+  height: 450px;
   padding: 20px;
 }
 
