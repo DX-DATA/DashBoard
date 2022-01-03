@@ -1,7 +1,7 @@
 <template>
   <div class="container">
+    <img src="/logo3.png" />
     <div class="form">
-      <img src="/logo.png" />
       <div class="input">
         <label class="title">ID</label>
         <input
@@ -115,7 +115,7 @@ export default {
 .form {
   width: 40vh;
   margin: 0 auto;
-  box-shadow: rgba(149, 157, 165, 0.4) 0px 8px 24px;
+  box-shadow: rgba(149, 157, 165, 0.4) 0px 5px 5px;
   border-radius: 10px;
   padding: 20px;
 }

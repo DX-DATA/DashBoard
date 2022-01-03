@@ -1,25 +1,42 @@
 <template>
   <div class="container">
+    <div class="logo-header"><img src="/logo2.png" /></div>
+
+    <div class="banner">
+      <img src="/banner2.png" width="480" style="border-radius: 5px" />
+    </div>
+
     <div class="form">
-      <img src="/logo.png" />
-      <div class="input-box">
-        <input type="text" id="id" v-model="states.id" placeholder="id" />
-        <label for="id">ID</label>
+      <div class="form-floating mb-3">
+        <input
+          type="text"
+          class="form-control"
+          id="floatingInput"
+          placeholder="ID"
+          v-model="states.id"
+        />
+        <label for="floatingInput">ID</label>
       </div>
-      <div class="input-box">
+      <div class="form-floating">
         <input
           type="password"
-          id="pw"
-          placeholder="password"
+          class="form-control"
+          id="floatingPassword"
+          placeholder="Password"
           v-model="states.password"
         />
-        <label for="pw">PW</label>
+        <label for="floatingPassword">Password</label>
       </div>
-      <button class="btn btn-primary" v-on:click="login">로그인</button>
-
+      <div class="form-floating mb-3">
+        <button class="btn btn-primary login-button" v-on:click="login">
+          Sign In
+        </button>
+      </div>
       <br />
-      <div class="forget">
-        <router-link to="/signUp"> 회원가입</router-link>
+      <div class="forget form-floating mb-3">
+        <router-link to="/signUp"
+          ><button class="btn btn-sign">회원가입</button></router-link
+        >
       </div>
     </div>
   </div>
@@ -72,52 +89,48 @@ export default {
 <style scoped>
 .container {
   text-align: center;
-  display: flex;
+  display: grid;
+  grid-template-columns: 800px 450px;
+  grid-template-areas:
+    'logo-header banner'
+    'form banner';
+  column-gap: 70px;
+  row-gap: 10px;
   align-items: center;
-  height: 100vh;
+  height: 600px;
+  margin-top: 120px;
+}
+
+.form-control {
+  width: 80%;
+}
+
+.form-floating {
+  margin-left: 10%;
+}
+.logo-header {
+  text-align: left;
+  grid-area: logo-header;
+}
+
+.banner {
+  grid-row: 1 / 3;
+  grid-area: banner;
+  height: 100%;
+  width: 100%;
+  box-shadow: rgba(149, 157, 165, 0.4) 1px 1px 1px;
+  border-radius: 5px;
 }
 
 .form {
-  width: 50vh;
+  width: 100%;
   margin: 0 auto;
   box-shadow: rgba(149, 157, 165, 0.4) 0px 8px 24px;
   border-radius: 10px;
   height: 450px;
-  padding: 20px;
-}
-
-.input-box {
-  position: relative;
-  margin: 20px 10px 20px 10px;
-}
-.input-box > input {
-  background: transparent;
-  border: none;
-  border-bottom: solid 1px #ccc;
-  padding: 20px 0px 5px 0px;
-  font-size: 14pt;
-  width: 100%;
-}
-input::placeholder {
-  color: transparent;
-}
-input:placeholder-shown + label {
-  color: #aaa;
-  font-size: 14pt;
-  top: 15px;
-}
-input:focus + label,
-label {
-  color: #8aa1a1;
-  font-size: 10pt;
-  pointer-events: none;
-  position: absolute;
-  left: 0px;
-  top: 0px;
-  transition: all 0.2s ease;
-  -webkit-transition: all 0.2s ease;
-  -moz-transition: all 0.2s ease;
-  -o-transition: all 0.2s ease;
+  padding: 70px 20px 20px 20px;
+  grid-area: form;
+  text-align: left;
 }
 
 input:focus,
@@ -127,9 +140,25 @@ input:not(:placeholder-shown) {
 }
 
 .forget {
-  text-align: right;
   font-size: smaller;
-  padding-top: 50px;
+  padding-top: 0px;
+}
+
+.btn-sign {
+  width: 30%;
+  margin-left: 60%;
+  color: #aaaaaa;
+}
+
+.btn-sign:hover {
+  color: black;
+}
+
+.login-button {
+  margin-top: 50px;
+  height: 70px;
+  width: 80%;
+  font-size: 16px;
 }
 
 @media (max-width: 768px) {
