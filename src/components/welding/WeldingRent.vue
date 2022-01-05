@@ -142,6 +142,18 @@ export default {
         hour: new Date().getHours() + 1,
         time: 0,
       },
+      initialization_time: () => {
+        rent.start_time = {
+          date: getToday(),
+          hour: new Date().getHours(),
+          time: 0,
+        };
+        rent.end_time = {
+          date: getToday(),
+          hour: new Date().getHours() + 1,
+          time: 0,
+        };
+      },
       postRent: () => {
         if (rent.start_time.hour < 10) {
           rent.start_time.hour = '0' + rent.start_time.hour;
@@ -181,7 +193,8 @@ export default {
         let now = new Date();
         let start = new Date(params.start_time);
         if (now > start) {
-          alert('이미 지난 시간입니다.');
+          alert('시간을 확인해 주세요.');
+          rent.initialization_time();
           return;
         }
 
@@ -214,6 +227,8 @@ export default {
             .catch((err) => {
               console.log(err);
             });
+        } else {
+          rent.initialization_time();
         }
       },
     });
