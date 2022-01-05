@@ -74,7 +74,29 @@ export default {
   text-align: center;
   display: flex;
   align-items: center;
-  height: 100vh;
+  height: 600px;
+  margin-top: 17vh;
+}
+
+.form-control {
+  width: 80%;
+}
+
+.form-floating {
+  margin-left: 10%;
+}
+.logo-header {
+  text-align: left;
+  grid-area: logo-header;
+}
+
+.banner {
+  grid-row: 1 / 3;
+  grid-area: banner;
+  height: 100%;
+  width: 100%;
+  box-shadow: rgba(149, 157, 165, 0.4) 1px 1px 1px;
+  border-radius: 5px;
 }
 
 .form {
@@ -133,6 +155,19 @@ input:not(:placeholder-shown) {
 }
 
 @media (max-width: 768px) {
+  img {
+    width: 50vh;
+  }
+  .container {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .banner {
+    display: none;
+  }
+
   .form {
     width: 40vh;
     margin: 0 auto;
