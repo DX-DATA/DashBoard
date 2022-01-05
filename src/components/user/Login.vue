@@ -162,6 +162,19 @@ input:not(:placeholder-shown) {
 }
 
 @media (max-width: 768px) {
+  img {
+    width: 50vh;
+  }
+  .container {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .banner {
+    display: none;
+  }
+
   .form {
     width: 40vh;
     margin: 0 auto;
