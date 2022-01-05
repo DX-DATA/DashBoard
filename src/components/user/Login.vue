@@ -2,9 +2,7 @@
   <div class="container">
     <div class="logo-header"><img src="/logo2.png" /></div>
 
-    <div class="banner">
-      <img src="/banner2.png" width="480" style="border-radius: 5px" />
-    </div>
+    <div class="banner">공지사항 배너</div>
 
     <div class="form">
       <div class="form-floating mb-3">
