@@ -98,7 +98,28 @@ export default {
   row-gap: 10px;
   align-items: center;
   height: 600px;
-  margin-top: 120px;
+  margin-top: 17vh;
+}
+
+.form-control {
+  width: 80%;
+}
+
+.form-floating {
+  margin-left: 10%;
+}
+.logo-header {
+  text-align: left;
+  grid-area: logo-header;
+}
+
+.banner {
+  grid-row: 1 / 3;
+  grid-area: banner;
+  height: 100%;
+  width: 100%;
+  box-shadow: rgba(149, 157, 165, 0.4) 1px 1px 1px;
+  border-radius: 5px;
 }
 
 .form-control {
