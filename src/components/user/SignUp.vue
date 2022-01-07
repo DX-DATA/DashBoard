@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <img src="/logo2.png" />
     <div class="form">
       <div class="input">
         <label class="title">ID</label>

@@ -17,6 +17,8 @@ import Login from '../components/user/Login';
 import SignUp from '../components/user/SignUp';
 import UserManage from '../components/user/UserManage';
 
+import Notice from '../components/notice/Notice.vue';
+
 import api from '../api/api';
 const routes = [
   {
@@ -79,6 +81,11 @@ const routes = [
             component: WeldingList,
           },
         ],
+      },
+      {
+        path: '/notice',
+        name: 'notice',
+        component: Notice,
       },
       {
         path: 'userManage',

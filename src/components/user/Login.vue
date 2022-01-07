@@ -8,27 +8,14 @@
       <hr />
 
       <div class="banner-content">
-        <table class="table table-hover allign-left">
-          <tr>
-            <td>2021-12-28</td>
-            <td>로그인 디자인 변경</td>
-            <td>hyejin.p</td>
-          </tr>
-          <tr>
-            <td>2021-12-28</td>
-            <td>로그인 디자인 변경</td>
-            <td>hyejin.p</td>
-          </tr>
-          <tr>
-            <td>2021-12-28</td>
-            <td>로그인 디자인 변경</td>
-            <td>hyejin.p</td>
-          </tr>
-          <tr>
-            <td>2021-12-28</td>
-            <td>로그인 디자인 변경</td>
-            <td>hyejin.p</td>
-          </tr>
+        <table class="table">
+          <tbody>
+            <tr v-for="data in states.notice" :key="data">
+              <td style="width: 30%">{{ data.date.slice(0, 16) }}</td>
+              <td style="width: 50%">{{ data.title }}</td>
+              <td style="width: 20%">{{ data.user_id }}</td>
+            </tr>
+          </tbody>
         </table>
       </div>
     </div>
@@ -73,15 +60,23 @@
 import { reactive } from '@vue/reactivity';
 import { useStore } from 'vuex';
 import axios from 'axios';
+import { onMounted } from 'vue-demi';
 
 export default {
   setup() {
     const store = useStore();
     const url = store.getters.url;
 
+    onMounted(() => {
+      axios.get(url + '/board/notice/login').then((response) => {
+        states.notice = response.data;
+      });
+    });
+
     let states = reactive({
       id: '',
       password: '',
+      notice: '',
     });
 
     let login = async () => {
@@ -140,20 +135,6 @@ export default {
   grid-area: logo-header;
 }
 
-.banner {
-  grid-row: 1 / 3;
-  grid-area: banner;
-  height: 100%;
-  width: 100%;
-  padding: 5px;
-  box-shadow: rgba(149, 157, 165, 0.4) 1px 1px 1px;
-  border-radius: 5px;
-}
-
-.banner-content {
-  text-align: left;
-}
-
 .form-control {
   width: 80%;
 }
@@ -173,10 +154,24 @@ export default {
   width: 100%;
   box-shadow: rgba(149, 157, 165, 0.4) 1px 5px 24px;
   border-radius: 5px;
+  padding: 10px;
 }
 
 .table {
   color: #555555;
+}
+
+.table > tbody > tr > td {
+  font-size: 14px;
+}
+
+.banner-content {
+  text-align: left;
+}
+
+.banner-table-tr {
+  padding: 10px;
+  margin-bottom: 10px;
 }
 
 .form {
