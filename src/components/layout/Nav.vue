@@ -30,6 +30,11 @@
         >
       </li>
       <li>
+        <router-link to="/notice" class="nav_link text-white">
+          <i class="fas fa-bell"></i> 공지사항</router-link
+        >
+      </li>
+      <li>
         <a href="#" v-on:click="logout" class="nav_link text-white">로그아웃</a>
       </li>
     </ul>
