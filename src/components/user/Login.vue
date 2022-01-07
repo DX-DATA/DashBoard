@@ -2,7 +2,36 @@
   <div class="container">
     <div class="logo-header"><img src="/logo2.png" /></div>
 
-    <div class="banner">공지사항 배너</div>
+    <div class="banner">
+      <h3 style="color: #777777">NOTICE</h3>
+
+      <hr />
+
+      <div class="banner-content">
+        <table class="table table-hover allign-left">
+          <tr>
+            <td>2021-12-28</td>
+            <td>로그인 디자인 변경</td>
+            <td>hyejin.p</td>
+          </tr>
+          <tr>
+            <td>2021-12-28</td>
+            <td>로그인 디자인 변경</td>
+            <td>hyejin.p</td>
+          </tr>
+          <tr>
+            <td>2021-12-28</td>
+            <td>로그인 디자인 변경</td>
+            <td>hyejin.p</td>
+          </tr>
+          <tr>
+            <td>2021-12-28</td>
+            <td>로그인 디자인 변경</td>
+            <td>hyejin.p</td>
+          </tr>
+        </table>
+      </div>
+    </div>
 
     <div class="form">
       <div class="form-floating mb-3">
@@ -116,8 +145,13 @@ export default {
   grid-area: banner;
   height: 100%;
   width: 100%;
+  padding: 5px;
   box-shadow: rgba(149, 157, 165, 0.4) 1px 1px 1px;
   border-radius: 5px;
+}
+
+.banner-content {
+  text-align: left;
 }
 
 .form-control {
@@ -135,10 +169,14 @@ export default {
 .banner {
   grid-row: 1 / 3;
   grid-area: banner;
-  height: 100%;
+  height: 580px;
   width: 100%;
-  box-shadow: rgba(149, 157, 165, 0.4) 1px 1px 1px;
+  box-shadow: rgba(149, 157, 165, 0.4) 1px 5px 24px;
   border-radius: 5px;
+}
+
+.table {
+  color: #555555;
 }
 
 .form {
@@ -174,7 +212,7 @@ input:not(:placeholder-shown) {
 }
 
 .login-button {
-  margin-top: 50px;
+  margin-top: 30px;
   height: 70px;
   width: 80%;
   font-size: 16px;
@@ -195,7 +233,7 @@ input:not(:placeholder-shown) {
   }
 
   .form {
-    width: 40vh;
+    width: 80vh;
     margin: 0 auto;
     box-shadow: rgba(149, 157, 165, 0.4) 0px 8px 24px;
     border-radius: 10px;
