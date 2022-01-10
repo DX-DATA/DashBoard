@@ -48,7 +48,6 @@ export default {
 
 .wrapper {
   display: grid;
-  background: rgb(236, 236, 236);
   height: 100vh;
   grid-template-columns: 240px 1fr;
   grid-template-rows: 60px 1fr 80px;
@@ -60,7 +59,7 @@ export default {
 
 .header {
   grid-area: header;
-  background: white;
+  background: #ffffff;
   box-shadow: rgba(100, 100, 111, 0.2) 3px 3px 5px 1px;
 }
 
@@ -73,6 +72,7 @@ export default {
   grid-area: content;
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
+  background: #ffffff;
 }
 
 .content::-webkit-scrollbar {

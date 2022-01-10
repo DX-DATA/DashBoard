@@ -17,7 +17,9 @@ import Login from '../components/user/Login';
 import SignUp from '../components/user/SignUp';
 import UserManage from '../components/user/UserManage';
 
+/* 공지 */
 import Notice from '../components/notice/Notice.vue';
+import NoticePost from '../components/notice/NoticePost.vue';
 
 import api from '../api/api';
 const routes = [
@@ -83,9 +85,14 @@ const routes = [
         ],
       },
       {
-        path: '/notice',
+        path: 'notice',
         name: 'notice',
         component: Notice,
+      },
+      {
+        path: 'notice/:id',
+        name: 'noticePost',
+        component: NoticePost,
       },
       {
         path: 'userManage',
