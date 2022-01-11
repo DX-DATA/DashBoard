@@ -3,37 +3,53 @@
     <div class="header-content">
       <span class="gray-text">NOTICE</span>
       <span>
-        <input class="search" type="text" placeholder="Search" />
+        <input
+          class="search"
+          type="text"
+          placeholder="Search"
+          v-model="search.data"
+        />
       </span>
     </div>
-    <table>
-      <thead>
-        <td width="10%">No</td>
-        <td width="55%">제목</td>
-        <td width="20%">게시자</td>
-        <td width="15%">날짜</td>
-      </thead>
-      <tbody>
-        <tr
-          v-for="ele in state.data"
-          :key="ele"
-          v-on:click="state.route(ele.board_idx)"
-        >
-          <td>
-            {{ ele.board_idx }}
-          </td>
-          <td>
-            {{ ele.title }}
-          </td>
-          <td>
-            {{ ele.user_id }}
-          </td>
-          <td>
-            {{ ele.date.slice(0, 16) }}
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <td width="10%">No</td>
+          <td width="55%">제목</td>
+          <td width="20%">작성자</td>
+          <td width="15%">작성일자</td>
+        </thead>
+        <tbody>
+          <tr
+            v-for="ele in state.data"
+            :key="ele"
+            v-on:click="state.route(ele.board_idx)"
+          >
+            <td style="padding-left: 5px">
+              {{ ele.board_idx }}
+            </td>
+            <td>
+              {{ ele.title }}
+            </td>
+            <td>
+              {{ ele.user_id }}
+            </td>
+            <td>
+              {{ ele.date.slice(0, 16) }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="btn-group">
+      <button
+        class="btn btn-primary"
+        v-if="state.isAdmin"
+        v-on:click="state.write"
+      >
+        공지 등록
+      </button>
+    </div>
   </div>
 </template>
 
@@ -43,6 +59,8 @@ import { useStore } from 'vuex';
 import axios from 'axios';
 import api from '../../api/api';
 import { useRouter } from 'vue-router';
+import { watch } from 'vue';
+
 export default {
   setup() {
     const store = useStore();
@@ -50,6 +68,9 @@ export default {
     const url = store.getters.url;
 
     onMounted(() => {
+      if (localStorage.getItem('admin') == 1) {
+        state.isAdmin = true;
+      }
       axios
         .get(url + '/board/notice/list', {
           headers: {
@@ -57,19 +78,58 @@ export default {
           },
         })
         .then((response) => {
-          state.data = response.data.reverse();
+          state.data = response.data;
+          state.originData = response.data.reverse();
         });
     });
 
     let state = reactive({
       data: '',
+      originData: '',
+      isAdmin: false,
       route: (id) => {
-        console.log(id);
-        router.push({ name: 'noticePost', params: { id: id } });
+        router.push({
+          name: 'noticePost',
+          params: { id: id, isReadonly: true },
+        });
+      },
+      write: () => {
+        router.push({
+          name: 'noticePost',
+          params: { id: 'write' },
+        });
       },
     });
 
-    return { state };
+    let search = reactive({
+      data: '',
+      onSearch: () => {
+        console.log();
+      },
+    });
+
+    watch(search, () => {
+      let temp = [];
+      for (let i = 0; i < state.originData.length; i++) {
+        if (
+          state.originData[i].title
+            .toLowerCase()
+            .match(search.data.toLowerCase()) ||
+          state.originData[i].user_id
+            .toLowerCase()
+            .match(search.data.toLowerCase()) ||
+          state.originData[i].date
+            .toLowerCase()
+            .match(search.data.toLowerCase())
+        ) {
+          temp.push(state.originData[i]);
+        }
+      }
+
+      state.data = temp;
+    });
+
+    return { state, search };
   },
 };
 </script>
@@ -89,7 +149,7 @@ export default {
 
 .gray-text {
   font-size: 22px;
-  color: #666666;
+  color: #444444;
 }
 
 .search {
@@ -97,6 +157,7 @@ export default {
   border-top: none;
   border-left: none;
   border-right: none;
+  width: 200px;
   border-bottom: 1px solid #aaaaaa;
 }
 
@@ -105,31 +166,50 @@ export default {
   border-bottom: 1px solid #333333;
 }
 
-.custom-container > table {
+.custom-container > div > table {
   width: 100%;
   margin: 20px auto;
   padding: 10px;
-  color: #666666;
+  color: #555;
 }
 
-.custom-container > table > thead {
+.table-wrap {
+  height: 700px;
+  overflow: auto;
+}
+
+.table-wrap::-webkit-scrollbar {
+  width: 3px;
+  background-color: #aaaaaa;
+}
+
+.custom-container > div > table > thead {
   width: 100%;
   border-bottom: 1px solid #dddddd;
   font-size: 18px;
   font-weight: bold;
 }
 
-.custom-container > table > tbody {
+.custom-container > div > table > tbody {
   width: 100%;
 }
 
-.custom-container > table > tbody > tr {
+.custom-container > div > table > tbody > tr {
   border-bottom: 1px solid #dddddd;
   height: 50px;
+  border-radius: 3px;
 }
 
-.custom-container > table > tbody > tr:hover {
+.custom-container > div > table > tbody > tr:hover {
   background: #eeeeee;
   cursor: pointer;
+}
+
+.btn-group {
+  float: right;
+}
+
+.btn {
+  margin: 10px 5px;
 }
 </style>
