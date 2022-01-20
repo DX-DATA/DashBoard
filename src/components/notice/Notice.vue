@@ -137,7 +137,7 @@ export default {
 <style scoped>
 .custom-container {
   width: 90%;
-  margin: 30px auto;
+  margin: 0 auto;
   padding: 20px;
 
   background: white;
