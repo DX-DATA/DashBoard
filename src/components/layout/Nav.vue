@@ -4,10 +4,15 @@
       <h1>DXDATA DashBoard</h1>
     </div>
     <ul class="nav nav-pills flex-column mb-auto">
-      <li>
+      <!-- <li>
         <router-link to="/home" class="nav_link text-white">
           <i class="fas fa-home"></i> Home
         </router-link>
+      </li> -->
+      <li>
+        <router-link to="/notice" class="nav_link text-white">
+          <i class="fas fa-bell"></i> 공지사항</router-link
+        >
       </li>
       <li>
         <router-link to="/vaccine" class="nav_link text-white"
@@ -27,11 +32,6 @@
       <li>
         <router-link to="/welding" class="nav_link text-white">
           <i class="fas fa-bolt"></i> 용접기</router-link
-        >
-      </li>
-      <li>
-        <router-link to="/notice" class="nav_link text-white">
-          <i class="fas fa-bell"></i> 공지사항</router-link
         >
       </li>
       <li>
