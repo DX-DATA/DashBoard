@@ -14,9 +14,9 @@
     <div class="table-wrap">
       <table>
         <thead>
-          <td width="10%">No</td>
-          <td width="55%">제목</td>
-          <td width="20%">작성자</td>
+          <td width="5%">No</td>
+          <td width="60%">제목</td>
+          <td style="text-align: left" width="20%">작성자</td>
           <td width="15%">작성일자</td>
         </thead>
         <tbody>
@@ -25,16 +25,16 @@
             :key="ele"
             v-on:click="state.route(ele.board_idx)"
           >
-            <td style="padding-left: 5px">
+            <td style="text-align: center">
               {{ ele.board_idx }}
             </td>
-            <td>
+            <td style="padding: 0 15px">
               {{ ele.title }}
             </td>
             <td>
               {{ ele.user_id }}
             </td>
-            <td>
+            <td style="text-align: center">
               {{ ele.date.slice(0, 16) }}
             </td>
           </tr>
@@ -137,14 +137,13 @@ export default {
 <style scoped>
 .custom-container {
   width: 90%;
-  margin: 30px auto;
+  margin: 0 auto;
   padding: 20px;
-
   background: white;
 }
 
 .header-content {
-  padding: 5px 10px;
+  padding: 5px 0px;
 }
 
 .gray-text {
@@ -154,16 +153,18 @@ export default {
 
 .search {
   float: right;
-  border-top: none;
+  /* border-top: none;
   border-left: none;
-  border-right: none;
-  width: 200px;
-  border-bottom: 1px solid #aaaaaa;
+  border-right: none; */
+  padding: 5px;
+  width: 220px;
+  border: 1px solid #aaaaaa;
+  border-radius: 5px;
 }
 
 .search:focus {
   outline: none;
-  border-bottom: 1px solid #333333;
+  border: 1px solid #333333;
 }
 
 .custom-container > div > table {
@@ -181,6 +182,16 @@ export default {
 .table-wrap::-webkit-scrollbar {
   width: 3px;
   background-color: #aaaaaa;
+}
+
+.table-wrap thead td {
+  padding-bottom: 10px;
+  text-align: center;
+  color: black;
+}
+
+.table-wrap tbody {
+  font-size: 15px;
 }
 
 .custom-container > div > table > thead {

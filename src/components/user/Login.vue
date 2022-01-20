@@ -95,7 +95,7 @@ export default {
             await setcookie(response);
             localStorage.setItem('department', response.data.department);
             localStorage.setItem('admin', response.data.admin);
-            location.href = '/home';
+            location.href = '/';
           }
         })
         .catch((e) => {

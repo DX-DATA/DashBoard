@@ -26,7 +26,7 @@ const routes = [
   {
     path: '/',
     name: 'DashBoard',
-    redirect: 'home',
+    redirect: 'notice',
     component: DashBoard,
     meta: { auth: true },
     children: [

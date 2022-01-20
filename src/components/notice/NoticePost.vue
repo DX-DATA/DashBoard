@@ -4,23 +4,9 @@
       <span class="gray-text" v-if="state.isReadonly">NOTICE > Detail</span>
       <span class="gray-text" v-if="!state.isReadonly">NOTICE > Write</span>
 
-      <hr />
+      <!-- <hr /> -->
     </div>
     <div class="input-group">
-      <input
-        type="text"
-        readonly
-        v-model="state.data.user_id"
-        class="user_id"
-        placeholder="작성자(자동 입력)"
-      />
-      <input
-        type="text"
-        readonly
-        v-model="state.data.date"
-        class="date"
-        placeholder="작성일자(자동 입력)"
-      />
       <input
         type="text"
         :readonly="state.isReadonly && !state.isAdmin"
@@ -28,6 +14,24 @@
         class="title"
         placeholder="제목을 입력해주세요"
       />
+      <div class="info">
+        <!-- <input
+          type="text"
+          readonly
+          v-model="state.data.user_id"
+          class="user_id"
+          placeholder="작성자(자동 입력)"
+        /> -->
+        <div class="user_id">{{ state.data.user_id }}</div>
+        <div class="date">{{ state.data.date }}</div>
+        <!-- <input
+          type="text"
+          readonly
+          v-model="state.data.date"
+          class="date"
+          placeholder="작성일자(자동 입력)"
+        /> -->
+      </div>
       <textarea
         type="text"
         :readonly="state.isReadonly && !state.isAdmin"
@@ -200,14 +204,14 @@ export default {
 <style scoped>
 .custom-container {
   width: 90%;
-  margin: 30px auto;
+  margin: 0 auto;
   padding: 20px;
-
   background: white;
 }
 
 .header-content {
   padding: 5px 10px;
+  border-bottom: 1px solid black;
 }
 
 .gray-text {
@@ -235,21 +239,30 @@ input:focus {
   outline: none;
 }
 
-.user_id {
-}
-
-.date {
-  margin-bottom: 20px;
-}
-
 .title {
   width: 100%;
   margin-bottom: 20px;
+  font-size: 20px;
+  font-weight: bold;
 }
 
 .title:focus {
   border: 1px solid black;
   border-radius: 3px;
+}
+
+.info {
+  display: flex;
+  justify-content: flex-end;
+  color: gray;
+  font-size: 15px;
+}
+
+.user_id {
+  margin-right: 30px;
+}
+
+.date {
 }
 
 .content {
@@ -259,7 +272,6 @@ input:focus {
   display: block;
   width: 100%;
   height: 550px;
-  color: #444444;
   resize: none;
   padding-top: 10px;
   padding-left: 5px;
