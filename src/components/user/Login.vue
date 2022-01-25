@@ -167,6 +167,8 @@ export default {
 
 .banner-content {
   text-align: left;
+  height: 500px;
+  overflow: auto;
 }
 
 .banner-table-tr {
