@@ -5,6 +5,7 @@ export default createStore({
     token: null,
     islogin: false,
     url: 'http://api.dxdata.co.kr:3333',
+    menu: false,
   },
   getters: {
     token(state) {
@@ -16,6 +17,9 @@ export default createStore({
     url(state) {
       return state.url;
     },
+    menu(state) {
+      return state.menu;
+    },
   },
   mutations: {
     setToken(state, token) {
@@ -23,6 +27,9 @@ export default createStore({
     },
     setLogin(state, boolean) {
       state.login = boolean;
+    },
+    setMenu(state, boolean) {
+      state.menu = boolean;
     },
   },
 });

@@ -163,6 +163,7 @@ export default {
 
 .table > tbody > tr > td {
   font-size: 14px;
+  vertical-align: middle;
 }
 
 .banner-content {

@@ -35,6 +35,11 @@
         >
       </li>
       <li>
+        <router-link to="/newboard/notice" class="nav_link text-white">
+          <i class="fas fa-external-link-alt"></i> NewDesign</router-link
+        >
+      </li>
+      <li>
         <a href="#" v-on:click="logout" class="nav_link text-white">로그아웃</a>
       </li>
     </ul>

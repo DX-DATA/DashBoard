@@ -21,6 +21,17 @@ import UserManage from '../components/user/UserManage';
 import Notice from '../components/notice/Notice.vue';
 import NoticePost from '../components/notice/NoticePost.vue';
 
+/* 새로운 디자인 */
+import newDashBoard from '../components/new/DashBoard.vue';
+
+import newElecarMain from '../components/new/elecar/ElecarMain.vue';
+import newElecar from '../components/new/elecar/Elecar.vue';
+import newElecarList from '../components/new/elecar/ElecarList.vue';
+
+/* 공지 */
+import newNotice from '../components/new/notice/Notice.vue';
+import newNoticePost from '../components/new/notice/NoticePost.vue';
+
 import api from '../api/api';
 const routes = [
   {
@@ -110,6 +121,45 @@ const routes = [
     path: '/signUp',
     name: 'signUp',
     component: SignUp,
+  },
+  {
+    path: '/newboard',
+    name: 'newboard',
+    component: newDashBoard,
+    children: [
+      {
+        path: 'elecar',
+        name: 'newelecar',
+        component: newElecar,
+        children: [
+          {
+            path: '',
+            name: 'newmain',
+            component: newElecarMain,
+          },
+          {
+            path: 'list',
+            name: 'newlist',
+            component: newElecarList,
+          },
+          {
+            path: 'rent',
+            name: 'newrent',
+            component: ElecarRent,
+          },
+        ],
+      },
+      {
+        path: 'notice',
+        name: 'newnotice',
+        component: newNotice,
+      },
+      {
+        path: 'notice/:id',
+        name: 'newnoticePost',
+        component: newNoticePost,
+      },
+    ],
   },
 ];
 
