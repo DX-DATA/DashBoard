@@ -15,7 +15,7 @@ import { reactive } from '@vue/reactivity';
 import axios from 'axios';
 import api from '../../api/api';
 import io from 'socket.io/client-dist/socket.io';
-import { onMounted, onUnmounted } from '@vue/runtime-core';
+import { onMounted, onUnmounted, provide } from '@vue/runtime-core';
 import { useStore } from 'vuex';
 export default {
   components: { ElecarHeader },
@@ -136,6 +136,8 @@ export default {
     onUnmounted(() => {
       socket.disconnect();
     });
+
+    provide('state', state);
 
     return { state };
   },

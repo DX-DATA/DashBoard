@@ -77,7 +77,7 @@
 </template>
 
 <script>
-import { watch } from 'vue';
+import { watch, inject } from 'vue';
 import { reactive } from 'vue-demi';
 import ElecarDetail from './detail/ElecarDetail.vue';
 // import axios from 'axios';
@@ -87,14 +87,16 @@ import Reservation from './functions/Reservation.vue';
 export default {
   components: { ElecarDetail, Reservation },
   props: {
-    state: Object,
+    // state: Object,
   },
-  setup(props) {
+  setup() {
     // let store = useStore();
     // let url = store.getters.url;
 
+    let state = inject('state');
+
     let table = reactive({
-      datas: props.state.datas,
+      datas: state.datas,
     });
 
     let search = reactive({
@@ -106,19 +108,19 @@ export default {
 
     watch(search, () => {
       let temp = [];
-      for (let i = 0; i < props.state.datas.length; i++) {
+      for (let i = 0; i < state.datas.length; i++) {
         if (
-          props.state.datas[i].eqp_id
+          state.datas[i].eqp_id
             .toLowerCase()
             .match(search.data.toLowerCase()) ||
-          props.state.datas[i].department
+          state.datas[i].department
             .toLowerCase()
             .match(search.data.toLowerCase()) ||
-          props.state.datas[i].last_timestamp
+          state.datas[i].last_timestamp
             .toLowerCase()
             .match(search.data.toLowerCase())
         ) {
-          temp.push(props.state.datas[i]);
+          temp.push(state.datas[i]);
         }
       }
 
@@ -133,7 +135,7 @@ export default {
         'none';
     };
 
-    return { closeModal, table, search };
+    return { closeModal, table, search, state };
   },
 };
 </script>
