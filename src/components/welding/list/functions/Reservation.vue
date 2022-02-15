@@ -148,7 +148,7 @@
 import { onMounted, onUnmounted, reactive } from 'vue-demi';
 import axios from 'axios';
 import { useStore } from 'vuex';
-import api from '../../api/api';
+import api from '../../../../api/api';
 
 export default {
   props: ['data'],

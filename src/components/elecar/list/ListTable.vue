@@ -83,7 +83,7 @@ import ElecarDetail from './detail/ElecarDetail.vue';
 // import axios from 'axios';
 // import { useStore } from 'vuex';
 // import api from '../../api/api';
-import Reservation from './Reservation.vue';
+import Reservation from './functions/Reservation.vue';
 export default {
   components: { ElecarDetail, Reservation },
   props: {

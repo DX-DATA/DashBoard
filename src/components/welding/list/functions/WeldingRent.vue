@@ -114,7 +114,7 @@
 import { reactive } from '@vue/reactivity';
 import { onMounted } from '@vue/runtime-core';
 import axios from 'axios';
-import api from '../../api/api';
+import api from '../../../../api/api';
 import { useStore } from 'vuex';
 
 // import axios from 'axios';

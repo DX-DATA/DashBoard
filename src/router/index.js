@@ -2,16 +2,17 @@ import { createRouter, createWebHistory } from 'vue-router';
 import Main from '../components/Home';
 import Vaccine from '../components/vaccine/Main';
 import Crane from '../components/crane/CraneMain';
+
 import Elecar from '../components/elecar/Elecar';
-import ElecarMain from '../components/elecar/ElecarMain';
-import ElecarList from '../components/elecar/ElecarList';
-import ElecarRent from '../components/elecar/ElecarRent';
+import ElecarMain from '../components/elecar/main/ElecarMain';
+import ElecarList from '../components/elecar/list/ElecarList';
+import ElecarRent from '../components/elecar/list/functions/ElecarRent';
 import DashBoard from '../components/DashBoard';
 
 /* 용접기 */
 import Welding from '../components/welding/Welding';
 import WeldingMain from '../components/welding/main/WeldingMain';
-import WeldingList from '../components/welding/WeldingList';
+import WeldingList from '../components/welding/list/WeldingList';
 
 import Login from '../components/user/Login';
 import SignUp from '../components/user/SignUp';
