@@ -11,7 +11,7 @@
 
 <script>
 import UsingTable from './UsingTable.vue';
-import KakaoMap from '../modules/usingElecarMap.vue';
+import KakaoMap from '../../modules/usingElecarMap.vue';
 import AmountUsed from './AmountUsed.vue';
 
 export default {

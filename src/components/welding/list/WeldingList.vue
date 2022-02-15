@@ -118,10 +118,10 @@
 import { onMounted } from 'vue-demi';
 import { reactive, ref } from 'vue';
 import WeldingDetail from './detail/WeldingDetail.vue';
-import WeldingRent from './WeldingRent.vue';
-import Reservation from './Reservation.vue';
+import WeldingRent from './functions/WeldingRent.vue';
+import Reservation from './functions/Reservation.vue';
 import axios from 'axios';
-import api from '../../api/api';
+import api from '../../../api/api';
 import { useStore } from 'vuex';
 export default {
   components: { WeldingDetail, WeldingRent, Reservation },

@@ -201,10 +201,10 @@
 <script>
 import { reactive } from '@vue/reactivity';
 import DetailTable from './DetailTable';
-import KakaoMap from '../../modules/KakaoMap.vue';
+import KakaoMap from '../../../modules/KakaoMap.vue';
 import axios from 'axios';
 import { useStore } from 'vuex';
-import api from '../../../api/api';
+import api from '../../../../api/api';
 export default {
   components: { DetailTable, KakaoMap },
   props: ['data'],

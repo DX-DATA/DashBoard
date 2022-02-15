@@ -39,7 +39,7 @@
 import { reactive } from '@vue/reactivity';
 import { useStore } from 'vuex';
 import { onMounted } from 'vue-demi';
-import api from '../../../api/api';
+import api from '../../../../api/api';
 import axios from 'axios';
 
 export default {
