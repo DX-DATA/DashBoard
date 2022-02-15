@@ -3,7 +3,7 @@
     <div>
       <h4>고소차 목록</h4>
     </div>
-    <Table :state="routeData" />
+    <Table />
   </div>
 </template>
 
@@ -13,9 +13,7 @@ import Table from './ListTable.vue';
 
 export default {
   components: { Table },
-  props: {
-    routeData: Object,
-  },
+  props: {},
   setup() {
     return {};
   },
